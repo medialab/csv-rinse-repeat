@@ -1,0 +1,80 @@
+/* app css stylesheet */
+
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+  content: "";
+  padding: 0;
+}
+
+/* View Board */
+html, body, .ng-scope, .pretty-split-pane-frame {
+  height: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#top-component {
+  bottom: 20em;
+  margin-bottom: 5px;
+}
+
+#horizontal-divider {
+  bottom: 20em;
+  height: 5px;
+}
+
+#bottom-component {
+  height: 20em;
+}
+
+#left-component {
+  width: 10em;
+}
+
+#vertical-divider {
+  left: 10em;
+  width: 5px;
+}
+
+#right-component {
+  left: 10em;
+  margin-left: 5px;
+}
+
+#top-component2 {
+  bottom: 50%;
+  margin-bottom: 5px;
+}
+
+#horizontal-divider2 {
+  bottom: 50%;
+  height: 5px;
+}
+
+#bottom-component2 {
+  height: 50%;
+}
