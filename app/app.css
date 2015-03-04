@@ -37,6 +37,52 @@ html, body, .ng-scope, .pretty-split-pane-frame {
   padding: 0;
 }
 
+#left-component{
+  width: 50%;
+}
+
+#right-component {
+  left: 50%;
+  margin-left: 5px;
+}
+
+#vertical-divider{
+  left: 50%;
+  width: 5px;
+}
+
+
+#left-top-component{
+  height: 20%;
+}
+
+#left-middle-and-bottom-component{
+  top: 20%;
+  margin-top: 5px;
+}
+
+#horizontal-divider-1{
+  top: 20%;
+  height: 5px;
+}
+
+
+#left-middle-component{
+  height: 75%;
+}
+
+#left-bottom-component{
+  top: 75%;
+  margin-top: 5px;
+}
+
+#horizontal-divider-2{
+  top: 75%;
+  height: 5px;
+}
+
+
+/*
 #top-component {
   bottom: 20em;
   margin-bottom: 5px;
@@ -77,4 +123,4 @@ html, body, .ng-scope, .pretty-split-pane-frame {
 
 #bottom-component2 {
   height: 50%;
-}
+}*/
