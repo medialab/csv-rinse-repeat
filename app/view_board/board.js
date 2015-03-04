@@ -11,4 +11,9 @@ angular.module('rerere.view_board', ['ngRoute'])
 
 .controller('BoardCtrl', [function() {
   $('div.split-pane').splitPane()
+
+  window.editor = ace.edit("js-editor");
+  window.editor.setTheme("ace/theme/chrome");
+  window.editor.setFontSize(14)
+  window.editor.getSession().setMode("ace/mode/javascript");
 }]);

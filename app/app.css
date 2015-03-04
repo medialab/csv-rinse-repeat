@@ -81,46 +81,16 @@ html, body, .ng-scope, .pretty-split-pane-frame {
   height: 5px;
 }
 
-
-/*
-#top-component {
-  bottom: 20em;
-  margin-bottom: 5px;
+/* JS editor */
+#js-editor-container {
+  overflow: hidden;
+  margin: 1;
 }
-
-#horizontal-divider {
-  bottom: 20em;
-  height: 5px;
+#js-editor {
+  margin: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
-
-#bottom-component {
-  height: 20em;
-}
-
-#left-component {
-  width: 10em;
-}
-
-#vertical-divider {
-  left: 10em;
-  width: 5px;
-}
-
-#right-component {
-  left: 10em;
-  margin-left: 5px;
-}
-
-#top-component2 {
-  bottom: 50%;
-  margin-bottom: 5px;
-}
-
-#horizontal-divider2 {
-  bottom: 50%;
-  height: 5px;
-}
-
-#bottom-component2 {
-  height: 50%;
-}*/
