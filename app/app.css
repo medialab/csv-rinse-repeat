@@ -68,16 +68,16 @@ html, body, .ng-scope, .pretty-split-pane-frame {
 
 
 #left-middle-component{
-  height: 75%;
+  bottom: 25%;
+  margin-bottom: 5px;
 }
 
 #left-bottom-component{
-  top: 75%;
-  margin-top: 5px;
+  height: 25%;
 }
 
 #horizontal-divider-2{
-  top: 75%;
+  bottom: 25%;
   height: 5px;
 }
 
