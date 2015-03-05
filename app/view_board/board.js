@@ -9,9 +9,11 @@ angular.module('rerere.view_board', ['ngRoute'])
   });
 }])
 
-.controller('BoardCtrl', [function() {
+.controller('BoardCtrl', ['$scope'
+  ,function(               $scope) {
   $('div.split-pane').splitPane()
 
+  $scope
 
   init()
 
@@ -24,7 +26,9 @@ angular.module('rerere.view_board', ['ngRoute'])
     window.editor.getSession().setMode("ace/mode/javascript");
 
     // Load Test CSV
-    
+    d3.csv("test.csv")
+      // .row(function(d) { return {key: d.key, value: +d.value}; })
+      .get(function(error, rows) { console.log(rows); });
   }
 
 }]);
