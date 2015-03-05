@@ -12,6 +12,7 @@
     "angular-mocks": "~1.2.x",
     "html5-boilerplate": "~4.3.0",
     "split-pane": "~0.4.0",
-    "d3": "~3.5.5"
+    "d3": "~3.5.5",
+    "bootstrap": "~3.3.2"
   }
 }
