@@ -13,10 +13,24 @@ angular.module('rerere.view_board', ['ngRoute'])
   ,function(               $scope) {
   $('div.split-pane').splitPane()
 
-  $scope
+  $scope.input
+  $scope.output
+  $scope.inputLinePreview = false
 
   init()
 
+  // Scope functions
+  $scope.previewRandomRow = function(){
+    var i = Math.floor(Math.random() * ($scope.input.length))
+    ,row = $scope.input[i]
+    $scope.inputLinePreview = {
+      rowId: i
+      ,keys: Object.keys(row)
+      ,content: Object.keys(row).map(function(k){return row[k]})
+    }
+  }
+
+  // Internal functions
   function init(){
     // Init Ace JS editor panel
     // Note: we keep editor in global scope to be able to edit settings from the console
@@ -28,7 +42,11 @@ angular.module('rerere.view_board', ['ngRoute'])
     // Load Test CSV
     d3.csv("test.csv")
       // .row(function(d) { return {key: d.key, value: +d.value}; })
-      .get(function(error, rows) { console.log(rows); });
+      .get(function(error, rows) {
+        $scope.input = rows
+        $scope.previewRandomRow()
+        $scope.$apply()
+      })
   }
 
 }]);

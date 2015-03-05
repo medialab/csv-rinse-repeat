@@ -5,6 +5,18 @@
       <div class="split-pane fixed-top">
         <div class="split-pane-component" id="left-top-component">
           <div class="theme-split-pane-component-inner">
+            <div ng-if="inputLinePreview" id="input-preview-container">
+              <table class="table table-condensed">
+                <tr>
+                  <th>Row</th>
+                  <th ng-repeat="key in inputLinePreview.keys">{{key}}</th>
+                </tr>
+                <tr>
+                  <td>{{inputLinePreview.rowId}}</td>
+                  <td ng-repeat="cell in inputLinePreview.content">{{cell}}</td>
+                </tr>
+              </table>
+            </div>
           </div>
         </div>
         <div class="split-pane-divider" id="horizontal-divider-1"></div>
