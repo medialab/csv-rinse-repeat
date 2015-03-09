@@ -99,7 +99,7 @@ html, body, .ng-scope, .pretty-split-pane-frame {
   /*background: #EAEAEA;*/
   width: 100%;
   height: 100%;
-  padding: 0 1em;
+  /*padding: 0 1em;*/
   overflow: auto;
 -moz-box-shadow: inset 0px 2px 5px 0px #eee;
 -webkit-box-shadow: inset 0px 2px 5px 0px #eee;
@@ -119,4 +119,11 @@ box-shadow: inset 0px 2px 5px 0px #eee;
   bottom: 0;
   left: 0;
   right: 0;
+}
+
+/* Preview input */
+.data-cell{
+  word-wrap: break-word;
+  max-width: 120px;
+  font-size: 10px;
 }
