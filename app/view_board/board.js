@@ -17,6 +17,7 @@ angular.module('rerere.view_board', ['ngRoute'])
   $scope.output
   $scope.inputLinePreview = false
   $scope.outputLinePreview = false
+  $scope.runStatus = 'loading'
 
   $scope.startingCode = '// Edit your data here\ndata = data\n.map(function(d, i){\nreturn i\n})'
 
@@ -62,6 +63,7 @@ angular.module('rerere.view_board', ['ngRoute'])
       $scope.previewRandomOutputRow()
     } catch(e) {
       console.log('ERROR', e)
+      $scope.runStatus = 'error';
     }
     $scope.output = output
 

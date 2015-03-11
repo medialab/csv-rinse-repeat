@@ -170,7 +170,7 @@ th.data-cell{
   margin-top: -2px;
 }
 
-.triangle-container .triangle::after {
+.triangle-container .triangle{
   content: "";
   position: absolute;
   width: 0;
@@ -200,6 +200,10 @@ th.data-cell{
   width: 6em;
   padding-top: 6px;
   text-align: center
+}
+
+.triangle-container .triangle-alert{
+  border-color: #fdd #fdd #fdd #fdd;
 }
 
 .plus-sign{

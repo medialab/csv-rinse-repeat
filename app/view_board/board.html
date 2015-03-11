@@ -54,7 +54,7 @@ output = input.filter(function(item, i){
             </div>
             <div class="split-pane-divider" id="horizontal-divider-2">
               <div class="triangle-container">
-                <div class="triangle"></div>
+                <div class="triangle" ng-class="{'triangle-alert':runStatus=='error'}"></div>
                 <div class="triangle-content-container">
                   <div class="triangle-content text-info">
                     CTRL<span class="plus-sign">+</span>ENTER
