@@ -1,3 +1,7 @@
+body{
+  font-family: 'Roboto', sans-serif;
+}
+
 /* app css stylesheet */
 
 .menu {
@@ -107,7 +111,6 @@ html, body, .ng-scope, .pretty-split-pane-frame {
 box-shadow: inset 0px 2px 5px 0px #eee;
 }
 
-
 /* JS editor */
 #js-editor-container {
   overflow: hidden;
@@ -125,5 +128,46 @@ box-shadow: inset 0px 2px 5px 0px #eee;
 .data-cell{
   word-wrap: break-word;
   max-width: 120px;
-  font-size: 10px;
+
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
 }
+
+/* Triangles */
+.triangle-container{
+  position: relative;
+  margin-top: -2px;
+}
+
+.triangle-container .triangle::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  margin-left: -0.5em;
+  bottom: -5em;
+  right: 3em;
+  box-sizing: border-box;
+  border: 2.5em solid black;
+  border-color: transparent transparent #fff #fff;
+  transform-origin: 0 0;
+  transform: rotate(-45deg);
+  box-shadow: -2px 2px 3px 0 rgba(0, 0, 0, 0.2);
+}
+
+.triangle-container .triangle-content-container{
+  position: absolute;
+  right: 4.45em;
+}
+
+.triangle-container .triangle-content{
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 300;
+  line-height: normal;
+  margin-right: -3em;
+  width: 6em;
+  text-align: center
+}
+
