@@ -30,6 +30,16 @@ angular.module('rerere.view_board', ['ngRoute'])
     }
   }
 
+  $scope.codeKeyPress = function(e){
+    if((e.which == 13 || e.which == 10) && (e.ctrlKey || e.shiftKey)){
+      $scope.updateOutput();
+    }
+  }
+
+  $scope.updateOutput = function(){
+    console.log('update')
+  }
+
   // Internal functions
   function init(){
     // Init Ace JS editor panel

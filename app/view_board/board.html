@@ -23,17 +23,18 @@
           <div class="triangle-container">
             <div class="triangle"></div>
             <div class="triangle-content-container">
-              <div class="triangle-content">
+              <div class="triangle-content text-muted">
                 CODE YOUR<br>FILTER
               </div>
             </div>
           </div>
         </div>
+
         <div class="split-pane-component" id="left-middle-and-bottom-component">
           
           <div class="split-pane fixed-bottom">
             <div class="split-pane-component" id="left-middle-component">
-              <div class="theme-split-pane-component-inner" id="js-editor-container">
+              <div class="theme-split-pane-component-inner" id="js-editor-container" ng-keypress="codeKeyPress($event)">
                 <pre id="js-editor">
 // Edit your data here
 data = data
@@ -45,6 +46,11 @@ data = data
             <div class="split-pane-divider" id="horizontal-divider-2">
               <div class="triangle-container">
                 <div class="triangle"></div>
+                <div class="triangle-content-container">
+                  <div class="triangle-content text-info">
+                    CTRL +<br>ENTER
+                  </div>
+                </div>
               </div>
             </div>
             <div class="split-pane-component" id="left-bottom-component">
@@ -61,6 +67,7 @@ data = data
     <div class="split-pane-divider" id="vertical-divider"></div>
     <div class="split-pane-component" id="right-component">
       <div class="theme-split-pane-component-inner">
+        <kbd><kbd>ctrl</kbd> + <kbd>,</kbd></kbd>
       </div>
     </div>
 
