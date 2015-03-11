@@ -104,11 +104,11 @@ html, body, .ng-scope, .pretty-split-pane-frame {
   width: 100%;
   height: 100%;
   /*padding: 0 1em;*/
-  overflow: auto;
--moz-box-shadow: inset 0px 2px 5px 0px #eee;
--webkit-box-shadow: inset 0px 2px 5px 0px #eee;
--o-box-shadow: inset 0px 2px 5px 0px #eee;
-box-shadow: inset 0px 2px 5px 0px #eee;
+
+          box-shadow: inset 0px 2px 5px 0px #eee;
+       -o-box-shadow: inset 0px 2px 5px 0px #eee;
+     -moz-box-shadow: inset 0px 2px 5px 0px #eee;
+  -webkit-box-shadow: inset 0px 2px 5px 0px #eee;
 }
 
 .info-margin{
@@ -131,7 +131,8 @@ box-shadow: inset 0px 2px 5px 0px #eee;
 }
 
 .preview-container{
-  padding-left: 42px;
+  margin-left: 42px;
+  overflow: auto;
 }
 
 /* JS editor */
@@ -176,7 +177,7 @@ th.data-cell{
   height: 0;
   margin-left: -0.5em;
   bottom: -5em;
-  right: 3em;
+  right: 6em;
   box-sizing: border-box;
   border: 2.5em solid black;
   border-color: transparent transparent #fff #fff;
@@ -187,7 +188,7 @@ th.data-cell{
 
 .triangle-container .triangle-content-container{
   position: absolute;
-  right: 4.45em;
+  right: 7.45em;
 }
 
 .triangle-container .triangle-content{
@@ -199,5 +200,9 @@ th.data-cell{
   width: 6em;
   padding-top: 6px;
   text-align: center
+}
+
+.plus-sign{
+  color: #BBB;
 }
 
