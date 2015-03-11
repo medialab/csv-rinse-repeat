@@ -7,15 +7,17 @@
           <div class="theme-split-pane-component-inner">
             <div class="info-margin">
               INPUT
+              <br>
+              <button class="btn btn-xs btn-link" ng-click="previewRandomRow()"><span class="glyphicon glyphicon-refresh"></span></button>
             </div>
             <div ng-if="inputLinePreview" class="preview-container">
               <table class="table table-condensed">
                 <tr>
-                  <th class="data-cell">Row</th>
+                  <th class="data-cell text-info">row</th>
                   <th ng-repeat="key in inputLinePreview.keys" class="data-cell">{{key}}</th>
                 </tr>
                 <tr>
-                  <td class="data-cell">{{inputLinePreview.rowId}}</td>
+                  <td class="data-cell text-info">{{inputLinePreview.rowId}}</td>
                   <td ng-repeat="cell in inputLinePreview.content" class="data-cell">{{cell}}</td>
                 </tr>
               </table>
@@ -63,15 +65,15 @@ output = input
                 <div class="info-margin">
                   OUTPUT
                 </div>
-                <div ng-if="inputLinePreview" class="preview-container">
+                <div ng-if="outputLinePreview" class="preview-container">
                   <table class="table table-condensed">
                     <tr>
-                      <th class="data-cell">Row</th>
-                      <th ng-repeat="key in inputLinePreview.keys" class="data-cell">{{key}}</th>
+                      <th class="data-cell text-info">row</th>
+                      <th ng-repeat="key in outputLinePreview.keys" class="data-cell">{{key}}</th>
                     </tr>
                     <tr>
-                      <td class="data-cell">{{inputLinePreview.rowId}}</td>
-                      <td ng-repeat="cell in inputLinePreview.content" class="data-cell">{{cell}}</td>
+                      <td class="data-cell text-info">{{inputLinePreview.rowId}}</td>
+                      <td ng-repeat="cell in outputLinePreview.content" class="data-cell">{{cell}}</td>
                     </tr>
                   </table>
                 </div>
