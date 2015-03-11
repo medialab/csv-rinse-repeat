@@ -16,16 +16,27 @@ angular.module('rerere.view_board', ['ngRoute'])
   $scope.input
   $scope.output
   $scope.inputLinePreview = false
+  $scope.outputLinePreview = false
 
   $scope.startingCode = '// Edit your data here\ndata = data\n.map(function(d, i){\nreturn i\n})'
 
   init()
 
   // Scope functions
-  $scope.previewRandomRow = function(){
+  $scope.previewRandomInputRow = function(){
     var i = Math.floor(Math.random() * ($scope.input.length))
     ,row = $scope.input[i]
     $scope.inputLinePreview = {
+      rowId: i
+      ,keys: Object.keys(row)
+      ,content: Object.keys(row).map(function(k){return row[k]})
+    }
+  }
+
+  $scope.previewRandomOutputRow = function(){
+    var i = Math.floor(Math.random() * ($scope.output.length))
+    ,row = $scope.output[i]
+    $scope.outputLinePreview = {
       rowId: i
       ,keys: Object.keys(row)
       ,content: Object.keys(row).map(function(k){return row[k]})
@@ -39,7 +50,21 @@ angular.module('rerere.view_board', ['ngRoute'])
   }
 
   $scope.updateOutput = function(){
-    console.log('update')
+    var code = window.editor.getValue()
+    ,output = []
+
+    try{
+      output = (function(input, code, undefined){
+        var output
+        eval(code)
+        return output
+      })($scope.input, code)
+      $scope.previewRandomOutputRow()
+    } catch(e) {
+      console.log('ERROR', e)
+    }
+    $scope.output = output
+
   }
 
   // Internal functions
@@ -56,7 +81,7 @@ angular.module('rerere.view_board', ['ngRoute'])
       // .row(function(d) { return {key: d.key, value: +d.value}; })
       .get(function(error, rows) {
         $scope.input = rows
-        $scope.previewRandomRow()
+        $scope.previewRandomInputRow()
         $scope.$apply()
       })
   }

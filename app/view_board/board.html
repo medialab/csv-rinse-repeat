@@ -8,7 +8,7 @@
             <div class="info-margin">
               INPUT
               <br>
-              <button class="btn btn-xs btn-link" ng-click="previewRandomRow()"><span class="glyphicon glyphicon-refresh"></span></button>
+              <button class="btn btn-xs btn-link" ng-click="previewRandomInputRow()"><span class="glyphicon glyphicon-refresh"></span></button>
             </div>
             <div ng-if="inputLinePreview" class="preview-container">
               <table class="table table-condensed">
@@ -41,11 +41,15 @@
             <div class="split-pane-component" id="left-middle-component">
               <div class="theme-split-pane-component-inner" id="js-editor-container" ng-keypress="codeKeyPress($event)">
                 <pre id="js-editor">
-// Edit your data here
-output = input
-    .filter(function(d, i){
-        return true
-    })</pre>
+// FILTER YOUR DATA HERE
+
+// Just fill the "output" variable using "input"
+output = input.filter(function(item, i){
+
+  // EXAMPLE: return the first 10 items
+  return i &lt; 10;
+
+});</pre>
               </div>
             </div>
             <div class="split-pane-divider" id="horizontal-divider-2">
@@ -64,6 +68,8 @@ output = input
               <div class="theme-split-pane-component-inner">
                 <div class="info-margin">
                   OUTPUT
+                  <br>
+                  <button class="btn btn-xs btn-link" ng-click="previewRandomOutputRow()" ng-show="outputLinePreview"><span class="glyphicon glyphicon-refresh"></span></button>
                 </div>
                 <div ng-if="outputLinePreview" class="preview-container">
                   <table class="table table-condensed">
@@ -72,7 +78,7 @@ output = input
                       <th ng-repeat="key in outputLinePreview.keys" class="data-cell">{{key}}</th>
                     </tr>
                     <tr>
-                      <td class="data-cell text-info">{{inputLinePreview.rowId}}</td>
+                      <td class="data-cell text-info">{{outputLinePreview.rowId}}</td>
                       <td ng-repeat="cell in outputLinePreview.content" class="data-cell">{{cell}}</td>
                     </tr>
                   </table>
