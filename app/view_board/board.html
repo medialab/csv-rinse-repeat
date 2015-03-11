@@ -5,14 +5,17 @@
       <div class="split-pane fixed-top">
         <div class="split-pane-component" id="left-top-component">
           <div class="theme-split-pane-component-inner">
-            <div ng-if="inputLinePreview" id="input-preview-container">
+            <div class="info-margin">
+              INPUT
+            </div>
+            <div ng-if="inputLinePreview" class="preview-container">
               <table class="table table-condensed">
                 <tr>
-                  <th>Row</th>
-                  <th ng-repeat="key in inputLinePreview.keys">{{key}}</th>
+                  <th class="data-cell">Row</th>
+                  <th ng-repeat="key in inputLinePreview.keys" class="data-cell">{{key}}</th>
                 </tr>
                 <tr>
-                  <td>{{inputLinePreview.rowId}}</td>
+                  <td class="data-cell">{{inputLinePreview.rowId}}</td>
                   <td ng-repeat="cell in inputLinePreview.content" class="data-cell">{{cell}}</td>
                 </tr>
               </table>
@@ -37,9 +40,9 @@
               <div class="theme-split-pane-component-inner" id="js-editor-container" ng-keypress="codeKeyPress($event)">
                 <pre id="js-editor">
 // Edit your data here
-data = data
-    .map(function(d, i){
-        return i
+output = input
+    .filter(function(d, i){
+        return true
     })</pre>
               </div>
             </div>
@@ -48,13 +51,30 @@ data = data
                 <div class="triangle"></div>
                 <div class="triangle-content-container">
                   <div class="triangle-content text-info">
-                    CTRL +<br>ENTER
+                    CTRL ENTER
+                    <br>
+                    TO RUN
                   </div>
                 </div>
               </div>
             </div>
             <div class="split-pane-component" id="left-bottom-component">
               <div class="theme-split-pane-component-inner">
+                <div class="info-margin">
+                  OUTPUT
+                </div>
+                <div ng-if="inputLinePreview" class="preview-container">
+                  <table class="table table-condensed">
+                    <tr>
+                      <th class="data-cell">Row</th>
+                      <th ng-repeat="key in inputLinePreview.keys" class="data-cell">{{key}}</th>
+                    </tr>
+                    <tr>
+                      <td class="data-cell">{{inputLinePreview.rowId}}</td>
+                      <td ng-repeat="cell in inputLinePreview.content" class="data-cell">{{cell}}</td>
+                    </tr>
+                  </table>
+                </div>
               </div>
             </div>
 
@@ -67,7 +87,6 @@ data = data
     <div class="split-pane-divider" id="vertical-divider"></div>
     <div class="split-pane-component" id="right-component">
       <div class="theme-split-pane-component-inner">
-        <kbd><kbd>ctrl</kbd> + <kbd>,</kbd></kbd>
       </div>
     </div>
 

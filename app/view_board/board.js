@@ -17,6 +17,8 @@ angular.module('rerere.view_board', ['ngRoute'])
   $scope.output
   $scope.inputLinePreview = false
 
+  $scope.startingCode = '// Edit your data here\ndata = data\n.map(function(d, i){\nreturn i\n})'
+
   init()
 
   // Scope functions
