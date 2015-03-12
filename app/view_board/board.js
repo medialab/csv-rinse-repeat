@@ -17,7 +17,7 @@ angular.module('rerere.view_board', ['ngRoute'])
   $scope.output
   $scope.inputLinePreview = false
   $scope.outputLinePreview = false
-  $scope.runStatus = 'loading'
+  $scope.outputError = false
 
   $scope.startingCode = '// Edit your data here\ndata = data\n.map(function(d, i){\nreturn i\n})'
 
@@ -53,19 +53,32 @@ angular.module('rerere.view_board', ['ngRoute'])
   $scope.updateOutput = function(){
     var code = window.editor.getValue()
     ,output = []
+    ,success = true
 
     try{
+
       output = (function(input, code, undefined){
         var output
         eval(code)
         return output
       })($scope.input, code)
-      $scope.previewRandomOutputRow()
+
     } catch(e) {
+
       console.log('ERROR', e)
-      $scope.runStatus = 'error';
+      success = false
+      $scope.outputError = e.message
+
     }
-    $scope.output = output
+    
+    if(success){
+      $scope.output = output
+      $scope.previewRandomOutputRow()
+      $scope.outputError = false
+    } else {
+      $scope.output = false
+      $scope.outputLinePreview = false
+    }
 
   }
 

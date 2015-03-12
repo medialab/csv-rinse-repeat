@@ -54,7 +54,7 @@ output = input.filter(function(item, i){
             </div>
             <div class="split-pane-divider" id="horizontal-divider-2">
               <div class="triangle-container">
-                <div class="triangle" ng-class="{'triangle-alert':runStatus=='error'}"></div>
+                <div class="triangle"></div>
                 <div class="triangle-content-container">
                   <div class="triangle-content text-info">
                     CTRL<span class="plus-sign">+</span>ENTER
@@ -71,8 +71,15 @@ output = input.filter(function(item, i){
                   <br>
                   <button class="btn btn-xs btn-link" ng-click="previewRandomOutputRow()" ng-show="outputLinePreview"><span class="glyphicon glyphicon-refresh"></span></button>
                 </div>
-                <div ng-if="outputLinePreview" class="preview-container">
-                  <table class="table table-condensed">
+                <div class="preview-container">
+                  <div class="error-panel" ng-if="outputError">
+                    <div class="alert alert-danger" role="alert">
+                      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                      <span class="sr-only">Error:</span>
+                      {{outputError}}
+                    </div>
+                  </div>
+                  <table class="table table-condensed" ng-if="outputLinePreview" >
                     <tr>
                       <th class="data-cell text-info">row</th>
                       <th ng-repeat="key in outputLinePreview.keys" class="data-cell">{{key}}</th>

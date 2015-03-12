@@ -125,7 +125,7 @@ html, body, .ng-scope, .pretty-split-pane-frame {
   color: #666;
   text-align: center;
 
-  padding-top: 2px;
+  padding-top: 4px;
 
   overflow: hidden;
 }
@@ -202,11 +202,11 @@ th.data-cell{
   text-align: center
 }
 
-.triangle-container .triangle-alert{
-  border-color: #fdd #fdd #fdd #fdd;
-}
-
 .plus-sign{
   color: #BBB;
 }
 
+/* Error */
+.error-panel{
+  padding: 8px 6px 6px 6px;
+}
