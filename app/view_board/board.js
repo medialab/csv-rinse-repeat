@@ -109,12 +109,13 @@ angular.module('rerere.view_board', ['ngRoute'])
 
     $(dom_id)
       .html('')
-      .css('height', '150px')
 
     var width = 960,
-        height = 136,
-        padding_top = 20,
-        cellSize = 17; // cell size
+        cellSize = 14, // cell size
+        height = 17 + 7 * cellSize,
+        padding_top = 20
+
+    $(dom_id).css('height', (height + 12) + 'px')
 
     var day = d3.time.format("%w"),
         week = d3.time.format("%U"),

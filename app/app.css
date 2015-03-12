@@ -256,3 +256,33 @@ th.data-cell{
   right: 6px;
   bottom: 6px;
 }
+
+
+/* D3 view styles */
+.d3-panel {
+  font: 10px sans-serif;
+  shape-rendering: crispEdges;
+}
+
+.d3-panel .day {
+  fill: #fff;
+  stroke: #ccc;
+}
+
+.d3-panel .month {
+  fill: none;
+  stroke: #000;
+  stroke-width: 2px;
+}
+
+.d3-panel .RdYlGn .q0-11{fill:#fff}
+.d3-panel .RdYlGn .q1-11{fill:#ffffd9}
+.d3-panel .RdYlGn .q2-11{fill:#edf8b1}
+.d3-panel .RdYlGn .q3-11{fill:#c7e9b4}
+.d3-panel .RdYlGn .q4-11{fill:#7fcdbb}
+.d3-panel .RdYlGn .q5-11{fill:#41b6c4}
+.d3-panel .RdYlGn .q6-11{fill:#1d91c0}
+.d3-panel .RdYlGn .q7-11{fill:#225ea8}
+.d3-panel .RdYlGn .q8-11{fill:#253494}
+.d3-panel .RdYlGn .q9-11{fill:#081d58}
+.d3-panel .RdYlGn .q10-11{fill:#000}
