@@ -221,7 +221,11 @@ th.data-cell{
   position: relative;
   width: 100%;
 
-  border-bottom: 1px solid #CCC;
+          box-shadow: 1px 1px 5px 0px #eee;
+       -o-box-shadow: 1px 1px 5px 0px #eee;
+     -moz-box-shadow: 1px 1px 5px 0px #eee;
+  -webkit-box-shadow: 1px 1px 5px 0px #eee;
+  border-bottom: 1px solid #EEE;
 
   overflow: hidden;
 }
@@ -229,20 +233,21 @@ th.data-cell{
 .viz-card .viz-card-title{
   position: absolute;
   top: 0;
-  padding: 4px;
+  padding: 4px 2px 0px 4px;
 
           box-shadow: 1px 1px 5px 0px #eee;
        -o-box-shadow: 1px 1px 5px 0px #eee;
      -moz-box-shadow: 1px 1px 5px 0px #eee;
   -webkit-box-shadow: 1px 1px 5px 0px #eee;
 
-  background-color: #FFF;
+  background-color: rgba(255, 255, 255, 0.75);
   font-family: 'Roboto Condensed', sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
 }
 
 .viz-card .d3-panel{
+  margin-top: 12px;
   height: 300px;
 }
 
