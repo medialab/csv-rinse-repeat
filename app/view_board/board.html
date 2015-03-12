@@ -72,6 +72,14 @@ output = input.filter(function(item, i){
                   <button class="btn btn-xs btn-link" ng-click="previewRandomOutputRow()" ng-show="outputLinePreview"><span class="glyphicon glyphicon-refresh"></span></button>
                 </div>
                 <div class="preview-container">
+                  <div class="error-panel" ng-if="!outputError && !outputLinePreview">
+                    <p>
+                      Edit your code and press <kbd>CTRL</kbd> + <kbd>ENTER</kbd> to run it
+                    </p>
+                    <p class="text-muted">
+                      <small>Note: it works only from the coding panel</small>
+                    </p>
+                  </div>
                   <div class="error-panel" ng-if="outputError">
                     <div class="alert alert-danger" role="alert">
                       <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -102,6 +110,22 @@ output = input.filter(function(item, i){
     <div class="split-pane-divider" id="vertical-divider"></div>
     <div class="split-pane-component" id="right-component">
       <div class="theme-split-pane-component-inner">
+        <div class="viz-cards-container">
+
+          <div class="viz-card">
+            <div class="viz-card-title">
+              TIMESTAMPS - CALENDAR VIEW
+            </div>
+            <div class="float-buttons">
+              <button class="btn btn-xs btn-default"><span class="glyphicon glyphicon-fullscreen"></span> FULLSCREEN</button>
+            </div>
+            <div class="d3-panel">
+
+            </div>
+          </div>
+
+        </div>
+
       </div>
     </div>
 

@@ -210,3 +210,44 @@ th.data-cell{
 .error-panel{
   padding: 8px 6px 6px 6px;
 }
+
+/* Visualization cards */
+.viz-cards-container{
+  height: 100%;
+  overflow: auto;
+}
+
+.viz-card{
+  position: relative;
+  width: 100%;
+
+  border-bottom: 1px solid #CCC;
+
+  overflow: hidden;
+}
+
+.viz-card .viz-card-title{
+  position: absolute;
+  top: 0;
+  padding: 4px;
+
+          box-shadow: 1px 1px 5px 0px #eee;
+       -o-box-shadow: 1px 1px 5px 0px #eee;
+     -moz-box-shadow: 1px 1px 5px 0px #eee;
+  -webkit-box-shadow: 1px 1px 5px 0px #eee;
+
+  background-color: #FFF;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.viz-card .d3-panel{
+  height: 300px;
+}
+
+.viz-card .float-buttons{
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+}
