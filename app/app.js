@@ -5,7 +5,8 @@ angular.module('rerere', [
   'ngRoute',
   'rerere.view1',
   'rerere.view_board',
-  'rerere.version'
+  'rerere.version',
+  'rerere.cards.calendarview'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/view1'});

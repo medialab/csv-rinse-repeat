@@ -9,9 +9,10 @@ angular.module('rerere.view_board', ['ngRoute'])
   });
 }])
 
-.controller('BoardCtrl', ['$scope'
-  ,function(               $scope) {
-  $('div.split-pane').splitPane()
+.controller('BoardCtrl', ['$scope', 'calendarview'
+  ,function(               $scope ,  calendarview) {
+
+  var currentCardId = 0
 
   $scope.input
   $scope.output
@@ -19,7 +20,11 @@ angular.module('rerere.view_board', ['ngRoute'])
   $scope.outputLinePreview = false
   $scope.outputError = false
 
+  $scope.cards = []
+
   $scope.startingCode = '// Edit your data here\ndata = data\n.map(function(d, i){\nreturn i\n})'
+  
+  $('div.split-pane').splitPane()
 
   init()
 
@@ -93,6 +98,9 @@ angular.module('rerere.view_board', ['ngRoute'])
     window.editor.setFontSize(14)
     window.editor.getSession().setMode("ace/mode/javascript");
 
+    // Add starting cards
+    addCard('calendarview', 'timestamp-calendar-view', 'timestamp')
+
     // Load Test CSV
     d3.csv("test.csv")
       // .row(function(d) { return {key: d.key, value: +d.value}; })
@@ -105,91 +113,29 @@ angular.module('rerere.view_board', ['ngRoute'])
 
   function updateCards(){
     
-    var dom_id = '#timestamp-calendar-view'
+    $scope.cards.forEach(function(card){
+      card.update()
+    })
 
-    $(dom_id)
-      .html('')
+  }
 
-    var width = 960,
-        cellSize = 14, // cell size
-        height = 17 + 7 * cellSize,
-        padding_top = 20
-
-    $(dom_id).css('height', (height + 12) + 'px')
-
-    var day = d3.time.format("%w"),
-        week = d3.time.format("%U"),
-        year = d3.time.format("%Y"),
-        format = d3.time.format("%Y-%m-%d");
-
-    var data = d3.nest()
-      .key(function(d) { return format(new Date(d.timestamp)); })
-      .rollup(function(leaves) { return leaves.length; })
-      .map($scope.output);
-
-    var years = d3.set(
-        d3.keys(data)
-          .map(function(d){return year(new Date(d))})
-      )
-      .values()
-      .map(function(d){return +d})
-
-    var color = d3.scale.quantize()
-        .domain([0, d3.max(d3.values(data))])
-        .range(d3.range(11).map(function(d) { return "q" + d + "-11"; }));
-
-    var svg = d3.select(dom_id).selectAll("svg")
-        .data(d3.range(d3.min(years), d3.max(years)+1))
-      .enter().append("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .attr("class", "RdYlGn")
-      .append("g")
-        .attr("transform", "translate(" + ((width - cellSize * 53) / 2) + "," + (height - cellSize * 7 - 1) + ")");
-
-    svg.append("text")
-        .attr("transform", "translate(-6," + cellSize * 3.5 + ")rotate(-90)")
-        .style("text-anchor", "middle")
-        .text(function(d) { return d; });
-
-    var rect = svg.selectAll(".day")
-        .data(function(d) { return d3.time.days(new Date(d, 0, 1), new Date(d + 1, 0, 1)); })
-      .enter().append("rect")
-        .attr("class", "day")
-        .attr("width", cellSize)
-        .attr("height", cellSize)
-        .attr("x", function(d) { return week(d) * cellSize; })
-        .attr("y", function(d) { return day(d) * cellSize; })
-        .datum(format);
-
-    rect.append("title")
-        .text(function(d) { return d; });
-
-    svg.selectAll(".month")
-        .data(function(d) { return d3.time.months(new Date(d, 0, 1), new Date(d + 1, 0, 1)); })
-      .enter().append("path")
-        .attr("class", "month")
-        .attr("d", monthPath);
-
-    rect.filter(function(d) { return d in data; })
-        .attr("class", function(d) { return "day " + color(data[d]); })
-      .select("title")
-        .text(function(d) { return d + ": " + data[d] + ' tweets'; });
-
-
-    function monthPath(t0) {
-      var t1 = new Date(t0.getFullYear(), t0.getMonth() + 1, 0),
-          d0 = +day(t0), w0 = +week(t0),
-          d1 = +day(t1), w1 = +week(t1);
-      return "M" + (w0 + 1) * cellSize + "," + d0 * cellSize
-          + "H" + w0 * cellSize + "V" + 7 * cellSize
-          + "H" + w1 * cellSize + "V" + (d1 + 1) * cellSize
-          + "H" + (w1 + 1) * cellSize + "V" + 0
-          + "H" + (w0 + 1) * cellSize + "Z";
+  function addCard(card_type, container_id, column_id){
+    var card
+      ,id = currentCardId++
+    switch(card_type){
+      case 'calendarview':
+        card = calendarview()
+        break
     }
-
-    /*
-    d3.select(self.frameElement).style("height", "2910px");*/
+    $scope.cards.push({
+      card: card
+      ,id: id
+      ,container: container_id
+      ,column: column_id
+      ,update: function(){
+        this.card.draw(this.container, this.column, $scope.output)
+      }
+    })
   }
 
 }]);
