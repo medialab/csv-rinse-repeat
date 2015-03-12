@@ -34,7 +34,7 @@ body{
 }
 
 /* View Board */
-html, body, .ng-scope, .pretty-split-pane-frame {
+html, body, .ng-scope:not(.viz-card), .pretty-split-pane-frame {
   height: 100%;
   min-height: 100%;
   margin: 0;

@@ -9,8 +9,8 @@ angular.module('rerere.view_board', ['ngRoute'])
   });
 }])
 
-.controller('BoardCtrl', ['$scope', 'calendarview'
-  ,function(               $scope ,  calendarview) {
+.controller('BoardCtrl', ['$scope', 'calendarview', 'wordcloud'
+  ,function(               $scope ,  calendarview ,  wordcloud) {
 
   var currentCardId = 0
 
@@ -100,6 +100,7 @@ angular.module('rerere.view_board', ['ngRoute'])
 
     // Add starting cards
     addCard('CALENDAR VIEW', 'timestamp')
+    addCard('WORD CLOUD', 'text')
 
     // Load Test CSV
     d3.csv("test.csv")
@@ -125,6 +126,9 @@ angular.module('rerere.view_board', ['ngRoute'])
     switch(card_type){
       case 'CALENDAR VIEW':
         card = calendarview()
+        break
+      case 'WORD CLOUD':
+        card = wordcloud()
         break
     }
     $scope.cards.push({
