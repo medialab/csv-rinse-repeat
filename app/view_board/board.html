@@ -8,12 +8,14 @@
             <div class="info-margin">
               INPUT
               <br>
+              PREVIEW
+              <br>
               <button class="btn btn-xs btn-link" ng-click="previewRandomInputRow()"><span class="glyphicon glyphicon-refresh"></span></button>
             </div>
             <div ng-if="inputLinePreview" class="preview-container">
               <table class="table table-condensed">
                 <tr>
-                  <th class="data-cell text-info">row</th>
+                  <th class="data-cell text-info">row #</th>
                   <th ng-repeat="key in inputLinePreview.keys" class="data-cell">{{key}}</th>
                 </tr>
                 <tr>
@@ -71,6 +73,8 @@ output = input.filter(function(item, i){
                 <div class="info-margin">
                   OUTPUT
                   <br>
+                  PREVIEW
+                  <br>
                   <button class="btn btn-xs btn-link" ng-click="previewRandomOutputRow()" ng-show="outputLinePreview"><span class="glyphicon glyphicon-refresh"></span></button>
                 </div>
                 <div class="preview-container">
@@ -91,7 +95,7 @@ output = input.filter(function(item, i){
                   </div>
                   <table class="table table-condensed" ng-if="outputLinePreview" >
                     <tr>
-                      <th class="data-cell text-info">row</th>
+                      <th class="data-cell text-info">row #</th>
                       <th ng-repeat="key in outputLinePreview.keys" class="data-cell">{{key}}</th>
                     </tr>
                     <tr>
@@ -114,50 +118,14 @@ output = input.filter(function(item, i){
       <div class="theme-split-pane-component-inner">
         <div class="viz-cards-container">
 
-          <div class="viz-card">
+          <div class="viz-card" ng-repeat="card in cards">
             <div class="viz-card-title">
-              TIMESTAMPS - CALENDAR VIEW
+              {{card.title}}
             </div>
             <div class="float-buttons">
               <!-- <button class="btn btn-xs btn-default"><span class="glyphicon glyphicon-fullscreen"></span> FULLSCREEN</button> -->
             </div>
-            <div class="d3-panel" id="timestamp-calendar-view">
-            </div>
-          </div>
-
-          <div class="viz-card">
-            <div class="viz-card-title">
-              EMPTY FOR TEST
-            </div>
-            <div class="float-buttons">
-              <!-- <button class="btn btn-xs btn-default"><span class="glyphicon glyphicon-fullscreen"></span> FULLSCREEN</button> -->
-            </div>
-            <div class="d3-panel">
-
-            </div>
-          </div>
-
-          <div class="viz-card">
-            <div class="viz-card-title">
-              EMPTY FOR TEST
-            </div>
-            <div class="float-buttons">
-              <!-- <button class="btn btn-xs btn-default"><span class="glyphicon glyphicon-fullscreen"></span> FULLSCREEN</button> -->
-            </div>
-            <div class="d3-panel">
-
-            </div>
-          </div>
-
-          <div class="viz-card">
-            <div class="viz-card-title">
-              EMPTY FOR TEST
-            </div>
-            <div class="float-buttons">
-              <!-- <button class="btn btn-xs btn-default"><span class="glyphicon glyphicon-fullscreen"></span> FULLSCREEN</button> -->
-            </div>
-            <div class="d3-panel">
-
+            <div class="d3-panel" id="{{card.id}}">
             </div>
           </div>
 

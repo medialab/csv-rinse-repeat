@@ -99,7 +99,7 @@ angular.module('rerere.view_board', ['ngRoute'])
     window.editor.getSession().setMode("ace/mode/javascript");
 
     // Add starting cards
-    addCard('calendarview', 'timestamp-calendar-view', 'timestamp')
+    addCard('CALENDAR VIEW', 'timestamp')
 
     // Load Test CSV
     d3.csv("test.csv")
@@ -119,21 +119,21 @@ angular.module('rerere.view_board', ['ngRoute'])
 
   }
 
-  function addCard(card_type, container_id, column_id){
+  function addCard(card_type, column_id){
     var card
-      ,id = currentCardId++
+      ,id = 'card_' + currentCardId++
     switch(card_type){
-      case 'calendarview':
+      case 'CALENDAR VIEW':
         card = calendarview()
         break
     }
     $scope.cards.push({
       card: card
       ,id: id
-      ,container: container_id
       ,column: column_id
+      ,title: column_id.toUpperCase().replace('_', ' ') + ' - ' + card_type
       ,update: function(){
-        this.card.draw(this.container, this.column, $scope.output)
+        this.card.draw(this.id, this.column, $scope.output)
       }
     })
   }
