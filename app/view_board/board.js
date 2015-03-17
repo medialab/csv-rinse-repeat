@@ -9,8 +9,8 @@ angular.module('rerere.view_board', ['ngRoute'])
   });
 }])
 
-.controller('BoardCtrl', ['$scope', 'calendarview', 'wordcloud'
-  ,function(               $scope ,  calendarview ,  wordcloud) {
+.controller('BoardCtrl', ['$scope', 'calendarview', 'wordcloud', '$timeout'
+  ,function(               $scope ,  calendarview ,  wordcloud ,  $timeout) {
 
   var currentCardId = 0
 
@@ -149,7 +149,7 @@ angular.module('rerere.view_board', ['ngRoute'])
   function cardCascadeUpdate(){
     var cardId
     cardUpdateMap.forEach(function(id, toUpdate){
-      if(toUpdate){
+      if(cardId === undefined && toUpdate){
         cardId = id
       }
     })
@@ -194,7 +194,7 @@ angular.module('rerere.view_board', ['ngRoute'])
 
         cardUpdateMap.set(id, false)
 
-        setTimeout(cardCascadeUpdate, 10)
+        $timeout(cardCascadeUpdate, 0)
 
       }
     })
