@@ -254,8 +254,13 @@ th.data-cell{
 }
 
 .viz-card .d3-panel{
-  margin-top: 12px;
-  height: 300px;
+  margin-top: 18px;
+  height: 100px;
+}
+
+.viz-card .d3-panel .card-loading{
+  padding: 24px;
+  text-align: center;
 }
 
 .viz-card .float-buttons{

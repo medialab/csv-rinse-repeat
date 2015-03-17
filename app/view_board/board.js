@@ -140,9 +140,10 @@ angular.module('rerere.view_board', ['ngRoute'])
     
     $scope.cards.forEach(function(card){
       cardUpdateMap.set(card.id, true)
+      $('#' + card.id).html('<div class="card-loading">Loading...</div>')
     })
 
-    cardCascadeUpdate()
+    $timeout(cardCascadeUpdate, 300)
 
   }
 
@@ -190,11 +191,17 @@ angular.module('rerere.view_board', ['ngRoute'])
       ,title: column_id.toUpperCase().replace('_', ' ') + ' - ' + card_type
       ,update: function(){
 
+        // Clean
+        $('#' + column_id).html('')
+
+        // Draw
         graphicsModule.draw(id, column_id, $scope.output)
 
+        // Mark as updated
         cardUpdateMap.set(id, false)
 
-        $timeout(cardCascadeUpdate, 0)
+        // Trigger next update
+        $timeout(cardCascadeUpdate, 300)
 
       }
     })
