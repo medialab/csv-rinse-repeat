@@ -60,6 +60,12 @@ angular.module('rerere.cards.wordcloud', [])
           .filter(function(d){                            // Second round of filtering (now that we have the count)
               return wordIsValid_expensive(d.text, d.count)
             })
+          .sort(function(a,b){                            // Sort by count
+              return b.count-a.count
+            })
+          .filter(function(d, i){
+              return i<250                                // Keep the first items (= highest count)
+            })
 
         // Compute max count once for all
         var maxCount = d3.max(words.map(function(d){ return d.count }))
@@ -111,7 +117,7 @@ angular.module('rerere.cards.wordcloud', [])
         }
 
         function wordIsValid_expensive(word, count){
-          if(count < 3)                                   // Remove if too few occurrences
+          if(count < 4)                                   // Remove if too few occurrences
             return false
           if(stop_words_index[word.toLowerCase()])        // Remove stop words
             return false
