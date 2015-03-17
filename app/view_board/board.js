@@ -24,6 +24,7 @@ angular.module('rerere.view_board', ['ngRoute'])
   $scope.outputRowsCount = 1
 
   $scope.cards = []
+  var cardUpdateMap = d3.map()
 
   $scope.startingCode = '// Edit your data here\ndata = data\n.map(function(d, i){\nreturn i\n})'
   
@@ -138,29 +139,63 @@ angular.module('rerere.view_board', ['ngRoute'])
   function updateCards(){
     
     $scope.cards.forEach(function(card){
-      card.update()
+      cardUpdateMap.set(card.id, true)
     })
+
+    cardCascadeUpdate()
 
   }
 
+  function cardCascadeUpdate(){
+    var cardId
+    cardUpdateMap.forEach(function(id, toUpdate){
+      if(toUpdate){
+        cardId = id
+      }
+    })
+    if(cardId){
+
+      var card
+
+      $scope.cards.some(function(c){
+        if(c.id == cardId){
+          card = c
+          return true
+        }
+        return false
+      })
+
+      if(card){
+        card.update()
+      }
+
+    }
+  }
+
   function addCard(card_type, column_id){
-    var card
-      ,id = 'card_' + currentCardId++
+    var graphicsModule
+      , id = 'card_' + currentCardId++
     switch(card_type){
       case 'CALENDAR VIEW':
-        card = calendarview()
+        graphicsModule = calendarview()
         break
       case 'WORD CLOUD':
-        card = wordcloud()
+        graphicsModule = wordcloud()
         break
     }
     $scope.cards.push({
-      card: card
+      module: graphicsModule
       ,id: id
       ,column: column_id
       ,title: column_id.toUpperCase().replace('_', ' ') + ' - ' + card_type
       ,update: function(){
-        this.card.draw(this.id, this.column, $scope.output)
+
+        graphicsModule.draw(id, column_id, $scope.output)
+
+        cardUpdateMap.set(id, false)
+
+        setTimeout(cardCascadeUpdate, 10)
+
       }
     })
   }
