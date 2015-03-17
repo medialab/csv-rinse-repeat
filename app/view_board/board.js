@@ -9,8 +9,8 @@ angular.module('rerere.view_board', ['ngRoute'])
   });
 }])
 
-.controller('BoardCtrl', ['$scope', '$timeout', 'calendarview', 'wordcloud', 'topwords'
-  ,function(               $scope ,  $timeout ,  calendarview ,  wordcloud ,  topwords ) {
+.controller('BoardCtrl', ['$scope', '$timeout', 'calendarview', 'wordcloud', 'topwords', 'topitems'
+  ,function(               $scope ,  $timeout ,  calendarview ,  wordcloud ,  topwords ,  topitems ) {
 
   var currentCardId = 0
 
@@ -126,6 +126,7 @@ angular.module('rerere.view_board', ['ngRoute'])
     addCard('CALENDAR VIEW', 'timestamp')
     // addCard('WORD CLOUD', 'text')
     addCard('TOP WORDS', 'text')
+    addCard('TOP ITEMS', 'lang')
 
     // Load Test CSV
     d3.csv("test.csv")
@@ -186,6 +187,9 @@ angular.module('rerere.view_board', ['ngRoute'])
         break
       case 'TOP WORDS':
         graphicsModule = topwords()
+        break
+      case 'TOP ITEMS':
+        graphicsModule = topitems()
         break
     }
     $scope.cards.push({
