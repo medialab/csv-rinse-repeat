@@ -5,80 +5,111 @@ angular.module('rerere.cards.calendarview', [])
 .factory('calendarview', [
   function() {
     return function() {
-      var ns = {}
+      var ns = {} // Namespace
 
       ns.draw = function(container_id, column_id, table){
+        
+        // Reset the content of the container and inject the CSS
         $('#'+container_id)
-          .html('&shy;<style>' + ns.css + '</style>') // Clean and inject CSS
+          .html('&shy;<style>' + ns.css + '</style>')
           .append($('<div class="calendarview"></div>'))
 
-        var day = d3.time.format("%w"),
-            week = d3.time.format("%U"),
-            year = d3.time.format("%Y"),
-            format = d3.time.format("%Y-%m-%d");
+        // Initialize date formats we will use later
+        var day = d3.time.format("%w")
+          , week = d3.time.format("%U")
+          , year = d3.time.format("%Y")
+          , format = d3.time.format("%Y-%m-%d")
 
-        var data = d3.nest()
-          .key(function(d) { return format(new Date(d[column_id])); })
-          .rollup(function(leaves) { return leaves.length; })
-          .map(table);
+        // Reshape the data to count occurrences for each date
+        var data = d3.nest()                                    // Nesting aggregates data by a given key
+          .key(function(d) {
+              return format(new Date(d[column_id]))             // The key is the formatted date ('format' = day precision)
+            })
+          .rollup(function(leaves) { return leaves.length  })   // The rollup allows to count items (per date)
+          .map(table)                                           // Target of the nesting process
 
-        var years = d3.set(
-            d3.keys(data)
-              .map(function(d){return year(new Date(d))})
+        // We count which years are represented in data (useful later)
+        var years = d3.set(                                     // The set gives a list of unique items (years)
+            d3.keys(data)                                       
+              .map(function(d){return year(new Date(d))})       // Reformat full dates to years
           )
-          .values()
-          .map(function(d){return +d})
+          .values()                                             // Get the unique values from the set
+          .map(function(d){return +d})                          // Ensure they are numbers
 
-        var width = $('#'+container_id).width(),
-            cellSize = 14,
-            height = (17 + 7 * cellSize) * years.length,
-            padding_top = 20
+        // Graphic variables for integration in the interface
+        var width = $('#'+container_id).width()                 // Width of the graphical space cannot be set, we just get it
+          , cellSize = 14                                       // Size of the date cells, impacts height
+          , height = (17 + 7 * cellSize) * years.length         // Height can be set (for yearly block)
+          , padding_top = 20                                    // Padding added because the title uses space in the UI
 
+        // Setting size of graphical container
         $('#'+container_id).css('height', (height + 12) + 'px')
 
-        var color = d3.scale.quantize()
-            .domain([0, d3.max(d3.values(data))])
-            .range(d3.range(11).map(function(d) { return "q" + d + "-11"; }));
+        // 'color' maps values to CSS classes 'q0-11' to 'q10-11' containing a color scale
+        var color = d3.scale.quantize()                         // Specifies a discrete scale as a mapping function
+            .domain([0, d3.max(d3.values(data))])               // Input of this function: 0 to max count
+            .range(
+                d3.range(11)                                    // Output of this function: 11 possible values...
+                  .map(function(d) { return "q" + d + "-11" })  // ...from 'q0-11' to 'q10-11'
+              )
 
+        // Draw each year as a different calendar block
         var svg = d3.select('#'+container_id + ' .calendarview').selectAll("svg")
-            .data(d3.range(d3.min(years), d3.max(years)+1))
-          .enter().append("svg")
-            .attr("width", width)
-            .attr("height", height)
-            .attr("class", "RdYlGn")
-          .append("g")
-            .attr("transform", "translate(" + ((width - cellSize * 53) / 2) + "," + (height - cellSize * 7 - 1) + ")");
+            .data(d3.range(d3.min(years), d3.max(years)+1))     // With line above: bind years to svg elements in container
+          .enter().append("svg")                                // Create a SVG for each year
+            .attr("width", width)                               // Width of yearly block
+            .attr("height", height)                             // Height of yearly block
+          .append("g")                                          // Create a svg group
+            .attr("transform", "translate(" + ((width - cellSize * 53) / 2) + "," + (height - cellSize * 7 - 1) + ")")
+                                                                // Translate this group: stack yearly blocks top down, centered
 
+        // Add key text to indicate the year
         svg.append("text")
             .attr("transform", "translate(-6," + cellSize * 3.5 + ")rotate(-90)")
             .style("text-anchor", "middle")
-            .text(function(d) { return d; });
+            .text(function(d) { return d })                     // Remember that svg is bound to years range
 
+        // Draw the rectangles for days of the year (not filled with color yet)
         var rect = svg.selectAll(".day")
             .data(function(d) { return d3.time.days(new Date(d, 0, 1), new Date(d + 1, 0, 1)); })
-          .enter().append("rect")
-            .attr("class", "day")
-            .attr("width", cellSize)
-            .attr("height", cellSize)
-            .attr("x", function(d) { return week(d) * cellSize; })
-            .attr("y", function(d) { return day(d) * cellSize; })
-            .datum(format);
+                                                                // Bind each day of the year to '.day' items (CSS class)
+          .enter().append("rect")                               // Create a svg rectangle for each day
+            .attr("class", "day")                               // Add it the .day class
+            .attr("width", cellSize)                            // Cell width
+            .attr("height", cellSize)                           // Cell width
+            .attr("x", function(d) {                            // Placement:
+                return week(d) * cellSize                       //  weeks give the X
+              })
+            .attr("y", function(d) {
+                return day(d) * cellSize                        //  day of the week gives the Y
+              })
+            .datum(format)                                      // Bind the date format
+                                                                // Note: we use datum and not data because the days of the year
+                                                                //       do not vary (the .enter() clause does not matter)
 
+        // Add a tooltip with the date to the rectangle
         rect.append("title")
             .text(function(d) { return d; });
 
+        // Add a black stroke for each month
         svg.selectAll(".month")
-            .data(function(d) { return d3.time.months(new Date(d, 0, 1), new Date(d + 1, 0, 1)); })
+            .data(function(d) { return d3.time.months(new Date(d, 0, 1), new Date(d + 1, 0, 1)) })
           .enter().append("path")
             .attr("class", "month")
-            .attr("d", monthPath);
+            .attr("d", monthPath)                               // Complex code to write the path in a function below
 
-        rect.filter(function(d) { return d in data; })
-            .attr("class", function(d) { return "day " + color(data[d]); })
+        // Finally fill rectangles with color depending on data
+        rect.filter(function(d) { return d in data })           // Filter the rectangles when they match a date we have in data
+            .attr("class", function(d) {                        // Modify the CSS class:
+                return "day " + color(data[d])                  //  keep 'day' class and add the right color class
+              })
           .select("title")
-            .text(function(d) { return d + ": " + data[d] + ' tweets'; });
+            .text(function(d) {
+                return d + ": " + data[d] + ' items'            // Add tooltip including the count
+              })
 
 
+        // Drawing the path surronding months in calendar
         function monthPath(t0) {
           var t1 = new Date(t0.getFullYear(), t0.getMonth() + 1, 0),
               d0 = +day(t0), w0 = +week(t0),
@@ -91,6 +122,8 @@ angular.module('rerere.cards.calendarview', [])
         }
       }
 
+      // The CSS to be injected
+      // Note: backslashes allow multiline text -  oes not work in every browser
       ns.css = "\
 .d3-panel .calendarview {\
   font: 11px Roboto, sans-serif;\
