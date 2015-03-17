@@ -9,8 +9,8 @@ angular.module('rerere.view_board', ['ngRoute'])
   });
 }])
 
-.controller('BoardCtrl', ['$scope', '$timeout', 'calendarview', 'wordcloud', 'topwords', 'topitems'
-  ,function(               $scope ,  $timeout ,  calendarview ,  wordcloud ,  topwords ,  topitems ) {
+.controller('BoardCtrl', ['$scope', '$timeout', 'cards'
+  ,function(               $scope ,  $timeout ,  cards ) {
 
   var currentCardId = 0
 
@@ -123,14 +123,13 @@ angular.module('rerere.view_board', ['ngRoute'])
     window.editor.getSession().setMode("ace/mode/javascript");
 
     // Add starting cards
-    addCard('CALENDAR VIEW', 'timestamp')
-    // addCard('WORD CLOUD', 'text')
-    addCard('TOP WORDS', 'text')
-    addCard('TOP ITEMS', 'lang')
+    addCard('calendarview', 'timestamp')
+    addCard('wordcloud', 'text')
+    addCard('topwords', 'text')
+    addCard('topitems', 'lang')
 
     // Load Test CSV
     d3.csv("test.csv")
-      // .row(function(d) { return {key: d.key, value: +d.value}; })
       .get(function(error, rows) {
         $scope.input = rows
         $scope.previewRandomInputRows()
@@ -176,43 +175,33 @@ angular.module('rerere.view_board', ['ngRoute'])
   }
 
   function addCard(card_type, column_id){
-    var graphicsModule
-      , id = 'card_' + currentCardId++
-    switch(card_type){
-      case 'CALENDAR VIEW':
-        graphicsModule = calendarview()
-        break
-      case 'WORD CLOUD':
-        graphicsModule = wordcloud()
-        break
-      case 'TOP WORDS':
-        graphicsModule = topwords()
-        break
-      case 'TOP ITEMS':
-        graphicsModule = topitems()
-        break
+    try{
+      var id = 'card_' + currentCardId++
+        , card = cards[card_type]()
+      $scope.cards.push({
+        card: card
+        ,id: id
+        ,column: column_id
+        ,title: column_id.toUpperCase().replace('_', ' ') + ' - ' + card_type
+        ,update: function(){
+
+          // Clean
+          $('#' + column_id).html('')
+
+          // Draw
+          card.draw(id, column_id, $scope.output)
+
+          // Mark as updated
+          cardUpdateMap.set(id, false)
+
+          // Trigger next update
+          $timeout(cardCascadeUpdate, 300)
+
+        }
+      })
+    } catch(e) {
+      console.log('Card could not be added', card_type, e)
     }
-    $scope.cards.push({
-      module: graphicsModule
-      ,id: id
-      ,column: column_id
-      ,title: column_id.toUpperCase().replace('_', ' ') + ' - ' + card_type
-      ,update: function(){
-
-        // Clean
-        $('#' + column_id).html('')
-
-        // Draw
-        graphicsModule.draw(id, column_id, $scope.output)
-
-        // Mark as updated
-        cardUpdateMap.set(id, false)
-
-        // Trigger next update
-        $timeout(cardCascadeUpdate, 300)
-
-      }
-    })
   }
 
 }]);
