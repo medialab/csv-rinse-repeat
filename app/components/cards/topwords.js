@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('rerere.cards.wordcloud', [])
+angular.module('rerere.cards.topwords', [])
 
-.factory('wordcloud', [
+.factory('topwords', [
   function() {
     return function() {
       var ns = {}
@@ -26,15 +26,15 @@ angular.module('rerere.cards.wordcloud', [])
 
         // Clean the container
         $('#'+container_id)
-          .html('')
+          .html('&shy;<style>' + ns.css + '</style>')     // Inject CSS
+          .append($('<div class="topwords"></div>'))
 
         // Initialize various variables
         var strings = table.map(function(d){
                 return ''+d[column_id]                    // Extract text from the right column
               })
           , width = $('#'+container_id).width()           // We cannot set width (comes from the framing UI)
-          , height = 300                                  // But we can set height
-          , fill = d3.scale.category20()                  // Construct a new ordinal scale with a range of 20 categorical colors
+          , height = 260                                  // But we can set height
 
         // Set container's height
         $('#'+container_id).height(height)
@@ -45,9 +45,9 @@ angular.module('rerere.cards.wordcloud', [])
           var words = string
             .replace(/http[^ ]*/gi, '')                   // Remove URLs from text
             .match(/[^\s\.,!?:\/'"]+/g)                   // Tokenize text into words
-
-          words = words || []
           
+          words = words || []
+
           words.forEach(function(w){
             if(wordIsValid_cheap(w))
               wordsMap.set(w, (wordsMap.get(w) || 0) + 1 )
@@ -69,48 +69,19 @@ angular.module('rerere.cards.wordcloud', [])
               return b.count-a.count
             })
           .filter(function(d, i){
-              return i<250                                // Keep the first items (= highest count)
+              return i<50                                 // Keep the first items (= highest count)
             })
 
-        // Compute max count once for all
-        var maxCount = d3.max(words.map(function(d){ return d.count }))
-
-        // Compute and display tag cloud
-        d3.layout.cloud().size([width, height])
-          .words(words)                                   // Bind data
-          .rotate(function(d) {                           // 5 angles from -60 to +60 degrees
-              return ~~(Math.random() * 5) * 30 - 60
-            })
-          .padding(.8)
-          .font('Roboto Condensed')
-          .fontSize(function(d) {                         // text from 8 to 48 px
-              return 8 + Math.sqrt(d.count/maxCount) * 40
-            })
-          .on("end", drawCloud)
-          .start()
-
-        // SVG text drawing function
-        function drawCloud(words){
-          
-          // Note: the word cloud plugin provides coordinates and rotation for every word of the list
-
-          d3.select("#" + container_id).append("svg")     // We draw directly in the container
-              .attr("width", width)
-              .attr("height", height)
-            .append("g")                                  // Centering
-              .attr("transform", 'translate('+width/2+','+height/2+')')
-            .selectAll("text")
-              .data(words)                                // Data binding
-            .enter().append("text")                       // Drawing nodes from computing data
-              .style("font-size", function(d) { return d.size + "px"; })
-              .style("font-family", "Roboto Condensed")
-              .style("fill", function(d, i) { return fill(i); })
-              .attr("text-anchor", "middle")
-              .attr("transform", function(d) {
-                return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")"
+        // Draw (html)
+        var p = d3.select('#'+container_id + ' .topwords').selectAll("p")
+            .data(words)
+          .enter().append("p")
+            // .attr("width", width)
+            // .attr("height", height)
+            .html(function(d, i){
+                return '<span class="text-info">' + (i+1) + '. </span>' + d.text + ' <span class="text-muted">('+d.count+')</span>'
               })
-              .text(function(d) { return d.text })
-        }
+          
 
         // Words filtering functions
         function wordIsValid_cheap(word){
@@ -130,6 +101,23 @@ angular.module('rerere.cards.wordcloud', [])
         }
         
       }
+
+      ns.css = '\
+.topwords{  \
+  font: 12px Roboto, sans-serif;  \
+  padding-top: 6px;  \
+  padding-bottom: 6px;  \
+  -webkit-column-count: 4; /* Chrome, Safari, Opera */  \
+     -moz-column-count: 4; /* Firefox */  \
+          column-count: 4;  \
+} \
+.topwords p{  \
+  margin: 3px; \
+  padding-left: 6px; \
+} \
+.topwords .text-muted{ \
+  color: #AAA; \
+}'
 
       return ns
     }

@@ -5,6 +5,7 @@ angular.module('rerere', [
   'ngRoute',
   'rerere.cards.calendarview',
   'rerere.cards.wordcloud',
+  'rerere.cards.topwords',
   'rerere.view1',
   'rerere.view_board',
 ]).
