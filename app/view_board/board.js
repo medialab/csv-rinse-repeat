@@ -16,9 +16,12 @@ angular.module('rerere.view_board', ['ngRoute'])
 
   $scope.input
   $scope.output
-  $scope.inputLinePreview = false
-  $scope.outputLinePreview = false
+  $scope.inputLinePreviews = false
+  $scope.outputLinePreviews = false
   $scope.outputError = false
+
+  $scope.inputRowsCount = 1
+  $scope.outputRowsCount = 1
 
   $scope.cards = []
 
@@ -29,23 +32,43 @@ angular.module('rerere.view_board', ['ngRoute'])
   init()
 
   // Scope functions
-  $scope.previewRandomInputRow = function(){
-    var i = Math.floor(Math.random() * ($scope.input.length))
-    ,row = $scope.input[i]
-    $scope.inputLinePreview = {
-      rowId: i
-      ,keys: Object.keys(row)
-      ,content: Object.keys(row).map(function(k){return row[k]})
+  $scope.previewRandomInputRows = function(){
+    $scope.inputLinePreviews = []
+    for(let i=0; i<$scope.inputRowsCount; i++){
+      var rowId = Math.floor(Math.random() * ($scope.input.length))
+      ,row = $scope.input[rowId]
+      $scope.inputLinePreviews.push({
+        rowId: rowId
+        ,keys: Object.keys(row)
+        ,content: Object.keys(row).map(function(k){return row[k]})
+      })
     }
   }
 
-  $scope.previewRandomOutputRow = function(){
-    var i = Math.floor(Math.random() * ($scope.output.length))
-    ,row = $scope.output[i]
-    $scope.outputLinePreview = {
-      rowId: i
-      ,keys: Object.keys(row)
-      ,content: Object.keys(row).map(function(k){return row[k]})
+  $scope.inputCheckValidate_inputPreview = function(e){
+    if(e.which == 13){
+      $scope.previewRandomInputRows()
+      $('.input-narrow').blur()
+    }
+  }
+
+  $scope.previewRandomOutputRows = function(){
+    $scope.outputLinePreviews = []
+    for(let i=0; i<$scope.outputRowsCount; i++){
+      var rowId = Math.floor(Math.random() * ($scope.output.length))
+      ,row = $scope.output[rowId]
+      $scope.outputLinePreviews.push({
+        rowId: rowId
+        ,keys: Object.keys(row)
+        ,content: Object.keys(row).map(function(k){return row[k]})
+      })
+    }
+  }
+
+  $scope.inputCheckValidate_outputPreview = function(e){
+    if(e.which == 13){
+      $scope.previewRandomOutputRows()
+      $('.input-narrow').blur()
     }
   }
 
@@ -78,7 +101,7 @@ angular.module('rerere.view_board', ['ngRoute'])
     
     if(success){
       $scope.output = output
-      $scope.previewRandomOutputRow()
+      $scope.previewRandomOutputRows()
       $scope.outputError = false
 
       updateCards()
@@ -107,7 +130,7 @@ angular.module('rerere.view_board', ['ngRoute'])
       // .row(function(d) { return {key: d.key, value: +d.value}; })
       .get(function(error, rows) {
         $scope.input = rows
-        $scope.previewRandomInputRow()
+        $scope.previewRandomInputRows()
         $scope.$apply()
       })
   }

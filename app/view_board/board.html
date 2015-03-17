@@ -10,15 +10,19 @@
               <br>
               PREVIEW
               <br>
-              <button class="btn btn-xs btn-link" ng-click="previewRandomInputRow()"><span class="glyphicon glyphicon-refresh"></span></button>
+              ROWS
+              <br>
+              <br>
+              <input class="form-control input-sm input-narrow" type="text" placeholder="#" ng-model='inputRowsCount' ng-keypress='inputCheckValidate_inputPreview($event)'>
+              <button class="btn btn-xs btn-link" ng-click="previewRandomInputRows()"><span class="glyphicon glyphicon-refresh"></span></button>
             </div>
-            <div ng-if="inputLinePreview" class="preview-container">
+            <div ng-if="inputLinePreviews" class="preview-container">
               <table class="table table-condensed">
                 <tr>
                   <th class="data-cell text-info">row #</th>
-                  <th ng-repeat="key in inputLinePreview.keys" class="data-cell">{{key}}</th>
+                  <th ng-repeat="key in inputLinePreviews[0].keys" class="data-cell">{{key}}</th>
                 </tr>
-                <tr>
+                <tr ng-repeat="inputLinePreview in inputLinePreviews">
                   <td class="data-cell text-info">{{inputLinePreview.rowId}}</td>
                   <td ng-repeat="cell in inputLinePreview.content" class="data-cell">{{cell}}</td>
                 </tr>
@@ -75,10 +79,14 @@ output = input.filter(function(item, i){
                   <br>
                   PREVIEW
                   <br>
-                  <button class="btn btn-xs btn-link" ng-click="previewRandomOutputRow()" ng-show="outputLinePreview"><span class="glyphicon glyphicon-refresh"></span></button>
+                  ROWS
+                  <br>
+                  <br>
+                  <input class="form-control input-sm input-narrow" type="text" placeholder="#" ng-model='outputRowsCount' ng-keypress='inputCheckValidate_outputPreview($event)'>
+                  <button class="btn btn-xs btn-link" ng-click="previewRandomOutputRows()"><span class="glyphicon glyphicon-refresh"></span></button>
                 </div>
                 <div class="preview-container">
-                  <div class="error-panel" ng-if="!outputError && !outputLinePreview">
+                  <div class="error-panel" ng-if="!outputError && !outputLinePreviews">
                     <p>
                       Edit your code and press <kbd>CTRL</kbd> + <kbd>ENTER</kbd> to run it
                     </p>
@@ -93,12 +101,12 @@ output = input.filter(function(item, i){
                       {{outputError}}
                     </div>
                   </div>
-                  <table class="table table-condensed" ng-if="outputLinePreview" >
+                  <table class="table table-condensed" ng-if="outputLinePreviews" >
                     <tr>
                       <th class="data-cell text-info">row #</th>
-                      <th ng-repeat="key in outputLinePreview.keys" class="data-cell">{{key}}</th>
+                      <th ng-repeat="key in outputLinePreviews[0].keys" class="data-cell">{{key}}</th>
                     </tr>
-                    <tr>
+                    <tr ng-repeat="outputLinePreview in outputLinePreviews">
                       <td class="data-cell text-info">{{outputLinePreview.rowId}}</td>
                       <td ng-repeat="cell in outputLinePreview.content" class="data-cell">{{cell}}</td>
                     </tr>
