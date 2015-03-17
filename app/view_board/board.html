@@ -86,8 +86,8 @@ output = input.filter(function(item, i){
                     <button class="btn btn-xs btn-link" ng-click="previewRandomOutputRows()"><span class="glyphicon glyphicon-refresh"></span></button>
                   </div>
                 </div>
-                <div class="preview-container">
-                  <div class="error-panel" ng-if="!outputError && !outputLinePreviews">
+                <div class="preview-container" ng-if="!outputError && !outputLinePreviews">
+                  <div class="error-panel">
                     <p>
                       Edit your code and press <kbd>CTRL</kbd> + <kbd>ENTER</kbd> to run it
                     </p>
@@ -95,14 +95,18 @@ output = input.filter(function(item, i){
                       <small>Note: it works only from the coding panel</small>
                     </p>
                   </div>
-                  <div class="error-panel" ng-if="outputError">
+                </div>
+                <div class="preview-container" ng-if="outputError">
+                  <div class="error-panel">
                     <div class="alert alert-danger" role="alert">
                       <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                       <span class="sr-only">Error:</span>
                       {{outputError}}
                     </div>
                   </div>
-                  <table class="table table-condensed" ng-if="outputLinePreviews" >
+                </div>
+                <div class="preview-container" ng-if="outputLinePreviews">
+                  <table class="table table-condensed">
                     <tr>
                       <th class="data-cell text-info">row #</th>
                       <th ng-repeat="key in outputLinePreviews[0].keys" class="data-cell">{{key}}</th>
