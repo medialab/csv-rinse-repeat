@@ -152,6 +152,7 @@ html, body, .ng-scope:not(.viz-card), .pretty-split-pane-frame {
   bottom: 0;
   left: 0;
   right: 0;
+  height: 100%;
 }
 
 /* Table preview */
