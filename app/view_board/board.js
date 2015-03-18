@@ -86,8 +86,11 @@ angular.module('rerere.view_board', ['ngRoute'])
 
     try{
 
-      output = (function(input, code, undefined){
+      output = (function(_input, code, undefined){
         var output
+          , input = _input.map(function(obj){            // Clone to prevent input corruption
+                return $.extend({}, obj)
+              })
         eval(code)
         return output
       })($scope.input, code)
