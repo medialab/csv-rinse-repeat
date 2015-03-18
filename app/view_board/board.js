@@ -126,10 +126,11 @@ angular.module('rerere.view_board', ['ngRoute'])
     window.editor.getSession().setMode("ace/mode/javascript");
 
     // Add starting cards
-    addCard('calendarview', 'timestamp')
-    addCard('wordcloud', 'text')
-    addCard('topwords', 'text')
-    addCard('topitems', 'lang')
+    // addCard('calendarview', 'timestamp')
+    // addCard('wordcloud', 'text')
+    // addCard('topwords', 'text')
+    // addCard('topitems', 'lang')
+    addCard('volumeovertime_day', 'timestamp')
 
     // Load Test CSV
     d3.csv("test.csv")

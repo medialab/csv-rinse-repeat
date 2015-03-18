@@ -11,51 +11,116 @@ angular.module('rerere.cards.volumeovertime_day', [])
 
       // Clean the container
       $('#'+container_id)
-        .html('')
+        .html('&shy;<style>' + ns.css + '</style>')
+        .append($('<div class="volumeovertime_day"></div>'))
 
-      // TODO...
+      // Initialize date formats we will use later
+      var day     = d3.time.format("%w")
+        , week    = d3.time.format("%U")
+        , month   = d3.time.format("%m")
+        , year    = d3.time.format("%Y")
+        , format  = d3.time.format("%Y-%m-%d")
 
-      // Initialize various variables
-      var items = table.map(function(d){
-              return ''+d[column_id]                    // Extract text from the right column
-            })
-        , width = $('#'+container_id).width()           // We cannot set width (comes from the framing UI)
-        , height = 260                                  // But we can set height
-
-      // Set container's height
-      $('#'+container_id).height(height)
-
-      // Tokenize and index the words
-      var itemsMap = d3.map()                           // A d3 map works like an index object (key-value pairs)
-      items.forEach(function(item){
-        itemsMap.set(item, (itemsMap.get(item) || 0) + 1 )
-      })
-
-      // Convert the itemsMap into a list of objects compliant with wordcloud
-      var words = itemsMap.entries()                    // Return a list of {key:key, value:value} objects
-        .map(function(entry){
-            return {                                    // Renaming necessary for word cloud plugin
-                text:  entry.key
-              , count: entry.value
-              }
+      var data = d3.nest()
+        .key(function(d) {
+            return format(new Date(d[column_id]))             // The key is the formatted date ('format' = day precision)
           })
-        .sort(function(a,b){                            // Sort by count
-            return b.count-a.count
-          })
-        .filter(function(d, i){
-            return i<50                                 // Keep the first items (= highest count)
+        .rollup(function(leaves) { return leaves.length  })   // The rollup allows to count items (per date)
+        .entries(table)                                       // Target of the nesting process
+        .sort(function(a,b){
+            return new Date(a.key) - new Date(b.key)
           })
 
-      // Draw (html)
-      var p = d3.select('#'+container_id + ' .topitems').selectAll("p")
-          .data(words)
-        .enter().append("p")
-          // .attr("width", width)
-          // .attr("height", height)
-          .html(function(d, i){
-              return '<span class="text-info">' + (i+1) + '. </span>' + d.text + ' <span class="text-muted">('+d.count+')</span>'
-            })
+      var margin = {top: 20, right: 20, bottom: 30, left: 40}
+        , width = $('#'+container_id).width() - margin.left - margin.right
+        , containerHeight = 300
+        , height = containerHeight - margin.top - margin.bottom
+
+      // Setting size of graphical container
+      $('#'+container_id).css('height', containerHeight + 'px')
+
+      var x = d3.scale.ordinal()
+          .rangeRoundBands([0, width], .1)
+
+      var y = d3.scale.linear()
+          .range([height, 0])
+
+      var xAxis = d3.svg.axis()
+          .scale(x)
+          .orient("bottom")
+          .ticks(d3.time.days, 1)
+          .tickFormat(d3.time.format('%d'))
+          .tickSize(0)
+          .tickPadding(8);
+
+      var yAxis = d3.svg.axis()
+          .scale(y)
+          .orient("left")
+          .ticks(10)
+
+      var svg = d3.select('#'+container_id + ' .volumeovertime_day').append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+      x.domain(data.map(function(d) { return new Date(d.key); }));
+      y.domain([0, d3.max(data, function(d) { return d.values; })]);
+
+      svg.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(0," + height + ")")
+          .call(xAxis);
+
+      svg.append("g")
+          .attr("class", "y axis")
+          .call(yAxis)
+        .append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("# items");
+
+      svg.selectAll(".bar")
+          .data(data)
+        .enter().append("rect")
+          .attr("class", "bar")
+          .attr("x", function(d) { return x(new Date(d.key)); })
+          .attr("width", x.rangeBand())
+          .attr("y", function(d) { return y(d.values); })
+          .attr("height", function(d) { return height - y(d.values); })
+        .append("title")
+          .text(function(d) { return d.key + ': ' + d.values + ' items' });
     }
+
+    ns.css = '\
+.volumeovertime_day {  \
+  font-family: Roboto Condensed, sans-serif;  \
+} \
+  \
+.volumeovertime_day .bar {  \
+  fill: steelblue;  \
+} \
+  \
+.volumeovertime_day .bar:hover {  \
+  fill: brown;  \
+} \
+  \
+.volumeovertime_day .axis { \
+  font-size: 9px;  \
+} \
+  \
+.volumeovertime_day .axis path, \
+.volumeovertime_day .axis line {  \
+  fill: none; \
+  stroke: #000; \
+  shape-rendering: crispEdges;  \
+} \
+  \
+.volumeovertime_day .x.axis path {  \
+  display: none;  \
+}'
 
     return ns
   
