@@ -1,28 +1,25 @@
 'use strict';
 
-angular.module('rerere.cards', [
+// The list below contains a string identifier for each card type.
+// The same string is used in the file name, module name and factory name.
+// The goal here is just to make adding cards easier.
 
-    'rerere.cards.calendarview'
-  , 'rerere.cards.wordcloud'
-  , 'rerere.cards.topwords'
-  , 'rerere.cards.topitems'
-  , 'rerere.cards.volumeovertime_day'
+var cardlist = 
+[ 'calendarview'
+, 'wordcloud'
+, 'topwords'
+, 'topitems'
+, 'volumeovertime_day'
+]
 
-])
+angular.module('rerere.cards', cardlist.map(function(c){return 'rerere.cards.' + c}))
 
-.factory('cards', ['calendarview', 'wordcloud', 'topwords', 'topitems', 'volumeovertime_day'
-  ,function(        calendarview ,  wordcloud ,  topwords ,  topitems ,  volumeovertime_day ) {
-    var ns = {}
+.factory('cards', cardlist.concat(function(){
+  var ns = {}
 
-    ns.calendarview = calendarview
-    ns.wordcloud = wordcloud
-    ns.topwords = topwords
-    ns.topitems = topitems
-    ns.volumeovertime_day = volumeovertime_day
-
-    return ns
+  for(let i in arguments){
+    ns[cardlist[i]] = arguments[i]
   }
-])
 
-
-
+  return ns
+}))
