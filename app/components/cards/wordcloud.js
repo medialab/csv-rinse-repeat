@@ -43,6 +43,7 @@ angular.module('rerere.cards.wordcloud', [])
         var wordsMap = d3.map()                           // A d3 map works like an index object (key-value pairs)
         strings.forEach(function(string){
           var words = string
+            .toLowerCase()
             .replace(/http[^ ]*/gi, '')                   // Remove URLs from text
             .match(/[^\s\.,!?:\/'"]+/g)                   // Tokenize text into words
 
