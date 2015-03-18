@@ -2,24 +2,23 @@
 
 angular.module('rerere.cards', [
 
-  // Declare cards a first time here (modules)
     'rerere.cards.calendarview'
   , 'rerere.cards.wordcloud'
   , 'rerere.cards.topwords'
   , 'rerere.cards.topitems'
+  , 'rerere.cards.volumeovertime_day'
 
 ])
 
-// Declare cards a second time in the lines below (lazy loading)
-.factory('cards', ['calendarview', 'wordcloud', 'topwords', 'topitems'
-  ,function(        calendarview ,  wordcloud ,  topwords ,  topitems ) {
+.factory('cards', ['calendarview', 'wordcloud', 'topwords', 'topitems', 'volumeovertime_day'
+  ,function(        calendarview ,  wordcloud ,  topwords ,  topitems ,  volumeovertime_day ) {
     var ns = {}
 
-    // Declare cards a third and last time below (factories)
     ns.calendarview = calendarview
     ns.wordcloud = wordcloud
     ns.topwords = topwords
     ns.topitems = topitems
+    ns.volumeovertime_day = volumeovertime_day
 
     return ns
   }
