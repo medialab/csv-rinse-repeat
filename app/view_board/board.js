@@ -180,7 +180,7 @@ angular.module('rerere.view_board', ['ngRoute'])
   function addCard(card_type, column_id){
     try{
       var id = 'card_' + currentCardId++
-        , card = cards[card_type]()
+        , card = cards[card_type]
       $scope.cards.push({
         card: card
         ,id: id
