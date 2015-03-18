@@ -239,6 +239,7 @@ th.data-cell{
 
 .viz-card .viz-card-title{
   position: absolute;
+  z-index: 10;
   top: 0;
   padding: 4px 2px 0px 4px;
 

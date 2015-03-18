@@ -10,6 +10,7 @@ var cardlist =
 , 'topwords'
 , 'topitems'
 , 'volumeovertime_day'
+, 'mapcoordinates'
 ]
 
 angular.module('rerere.cards', cardlist.map(function(c){return 'rerere.cards.' + c}))

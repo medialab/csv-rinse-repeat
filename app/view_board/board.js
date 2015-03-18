@@ -13,9 +13,9 @@ angular.module('rerere.view_board', ['ngRoute'])
   ,function(               $scope ,  $timeout ,  cards ) {
 
   var currentCardId = 0
+    , _output
+    , _input
 
-  $scope.input
-  $scope.output
   $scope.inputLinePreviews = false
   $scope.outputLinePreviews = false
   $scope.outputError = false
@@ -36,8 +36,8 @@ angular.module('rerere.view_board', ['ngRoute'])
   $scope.previewRandomInputRows = function(){
     $scope.inputLinePreviews = []
     for(let i=0; i<$scope.inputRowsCount; i++){
-      var rowId = Math.floor(Math.random() * ($scope.input.length))
-      ,row = $scope.input[rowId]
+      var rowId = Math.floor(Math.random() * (_input.length))
+      ,row = _input[rowId]
       $scope.inputLinePreviews.push({
         rowId: rowId
         ,keys: Object.keys(row)
@@ -56,8 +56,8 @@ angular.module('rerere.view_board', ['ngRoute'])
   $scope.previewRandomOutputRows = function(){
     $scope.outputLinePreviews = []
     for(let i=0; i<$scope.outputRowsCount; i++){
-      var rowId = Math.floor(Math.random() * ($scope.output.length))
-      ,row = $scope.output[rowId]
+      var rowId = Math.floor(Math.random() * (_output.length))
+      ,row = _output[rowId]
       $scope.outputLinePreviews.push({
         rowId: rowId
         ,keys: Object.keys(row)
@@ -81,8 +81,8 @@ angular.module('rerere.view_board', ['ngRoute'])
 
   $scope.updateOutput = function(){
     var code = window.editor.getValue()
-    ,output = []
-    ,success = true
+      , output = []
+      , success = true
 
     try{
 
@@ -93,7 +93,7 @@ angular.module('rerere.view_board', ['ngRoute'])
               })
         eval(code)
         return output
-      })($scope.input, code)
+      })(_input, code)
 
     } catch(e) {
 
@@ -104,13 +104,13 @@ angular.module('rerere.view_board', ['ngRoute'])
     }
     
     if(success){
-      $scope.output = output
+      _output = output
       $scope.previewRandomOutputRows()
       $scope.outputError = false
 
       updateCards()
     } else {
-      $scope.output = false
+      _output = false
       $scope.outputLinePreview = false
     }
 
@@ -129,13 +129,14 @@ angular.module('rerere.view_board', ['ngRoute'])
     // addCard('calendarview', 'timestamp')
     // addCard('wordcloud', 'text')
     // addCard('topwords', 'text')
-    // addCard('topitems', 'lang')
-    addCard('volumeovertime_day', 'timestamp')
+    addCard('topitems', 'lang')
+    // addCard('volumeovertime_day', 'timestamp')
+    addCard('mapcoordinates', 'coordinates')
 
     // Load Test CSV
     d3.csv("test.csv")
       .get(function(error, rows) {
-        $scope.input = rows
+        _input = rows
         $scope.previewRandomInputRows()
         $scope.$apply()
       })
@@ -193,7 +194,7 @@ angular.module('rerere.view_board', ['ngRoute'])
           $('#' + column_id).html('')
 
           // Draw
-          card.draw(id, column_id, $scope.output)
+          card.draw(id, column_id, _output)
 
           // Mark as updated
           cardUpdateMap.set(id, false)

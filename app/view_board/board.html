@@ -52,10 +52,11 @@
 // Just fill the "output" variable using "input"
 output = input.filter(function(item, i){
 
-  // EXAMPLE: return the first 10 items
-  // return i &lt; 10;
+    // EXAMPLE: return the first 10 items
+    // return i &lt; 10;
 
-  return i%100 === 0;
+    // return i%100 === 0;
+    return item.coordinates &amp;&amp; item.coordinates != '0.0::0.0';
 
 });</pre>
               </div>
