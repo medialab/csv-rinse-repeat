@@ -219,7 +219,7 @@ angular.module('rerere.view_board', ['ngRoute'])
         card: card
         ,id: id
         ,column: column_id
-        ,title: column_id.toUpperCase().replace('_', ' ') + ' - ' + card_type
+        ,title: column_id.toUpperCase().replace('_', ' ') + ' - ' + card.name
         ,update: function(){
 
           // Clean

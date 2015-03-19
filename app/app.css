@@ -400,7 +400,7 @@ th.data-cell{
 }
 .upload-text{
   position: absolute;
-  margin-top: -40px;
+  margin-top: -36px;
   top: 0px;
   font-weight: 300;
   text-align: center;
@@ -409,7 +409,7 @@ th.data-cell{
 }
 .upload-text .upload-text-main{
   font-family: 'Roboto', sans-serif;
-  font-size: 48px;
+  font-size: 36px;
 }
 .upload-area-container:hover   .upload-text .upload-text-main,
 .upload-area-container.over    .upload-text .upload-text-main,
