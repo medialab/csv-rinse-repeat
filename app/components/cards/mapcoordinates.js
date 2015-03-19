@@ -7,7 +7,9 @@ angular.module('rerere.cards.mapcoordinates', [])
     var ns = {}
 
     // Function called to draw the interface
-    ns.draw = function(container_id, column_id, table){
+    ns.draw = function(container_id, table, options){
+      
+      var column_id = options.column_id
 
       $('#' + container_id)
         .html('')

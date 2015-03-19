@@ -6,7 +6,9 @@ angular.module('rerere.cards.calendarview', [])
   function() {
     var ns = {} // Namespace
 
-    ns.draw = function(container_id, column_id, table){
+    ns.draw = function(container_id, table, options){
+      
+      var column_id = options.column_id
       
       // Reset the content of the container and inject the CSS
       $('#'+container_id)

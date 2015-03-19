@@ -194,7 +194,7 @@ angular.module('rerere.view_board', ['ngRoute'])
           $('#' + column_id).html('')
 
           // Draw
-          card.draw(id, column_id, _output)
+          card.draw(id, _output, {column_id: column_id})
 
           // Mark as updated
           cardUpdateMap.set(id, false)
