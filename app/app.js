@@ -4,9 +4,10 @@
 angular.module('rerere', [
   'ngRoute',
   'rerere.cards',
-  'rerere.view1',
+  'rerere.view_upload',
   'rerere.view_board'
 ]).
 config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/view1'});
+  $routeProvider.otherwise({redirectTo: '/upload'});
 }]);
+

@@ -3,7 +3,7 @@
 angular.module('rerere.view_board', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view_board', {
+  $routeProvider.when('/board', {
     templateUrl: 'view_board/board.html',
     controller: 'BoardCtrl'
   });
@@ -198,7 +198,6 @@ angular.module('rerere.view_board', ['ngRoute'])
   }
 
   function addCard(card_type, column_id){
-    console.log(card_type, column_id)
     try{
       var id = 'card_' + currentCardId++
         , card = _cards[card_type]
