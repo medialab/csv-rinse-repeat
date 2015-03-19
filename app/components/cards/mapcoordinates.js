@@ -66,7 +66,7 @@ angular.module('rerere.cards.mapcoordinates', [])
           if (!style) {
             style = [new ol.style.Style({
               image: new ol.style.Circle({
-                radius: 6 + Math.round( 24 * Math.sqrt(size / maxItems)),
+                radius: Math.max( 8 , Math.round( 30 * Math.sqrt(size / maxItems))),
                 fill: new ol.style.Fill({
                   color: '#31708f'
                 })
