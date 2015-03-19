@@ -125,10 +125,20 @@ angular.module('rerere.view_board', ['ngRoute'])
     $scope.newCardProcess.step = 'select'
   }
 
+  $scope.newCard_cancel = function(){
+    $scope.newCardProcess.active = false
+    $scope.newCardProcess.step = ''
+  }
+
   $scope.newCard_selectViz = function(card){
     $scope.newCardProcess.active = true
     $scope.newCardProcess.card = card
     $scope.newCardProcess.step = 'options'
+  }
+
+  $scope.newCard_backToSelect = function(){
+    $scope.newCardProcess.active = true
+    $scope.newCardProcess.step = 'select'
   }
 
   $scope.newCard_selectColumn = function(col){

@@ -149,6 +149,14 @@ output = input.filter(function(item, i){
 
         <div class="select-card-container" ng-show="newCardProcess.active && newCardProcess.step == 'select'">
 
+          <div class="select-card-header">
+            <h3>Which one?
+              <button role="button" class="btn btn-link btn-lg pull-right btn-close" ng-click="newCard_cancel()">
+                <span class="glyphicon glyphicon-remove"></span>
+              </button>
+            </h3>
+          </div>
+
           <div class="card-type" ng-repeat="card in cardTypes" ng-click="newCard_selectViz(card)">
             <div class="card-image"><img ng-src="{{card.imageSource}}"/></div>
             <div class="card-name">{{card.name}}</div>
@@ -159,8 +167,14 @@ output = input.filter(function(item, i){
         </div>
 
         <div class="card-options-container" ng-show="newCardProcess.active && newCardProcess.step == 'options'">
-          <h3>{{newCardProcess.card.name}}: Which column?</h3>
-          <button role="button" class="btn btn-default" ng-repeat="col in outputColumns" ng-click="newCard_selectColumn(col)">{{col}}</button>
+          <div class="select-card-header">
+            <h3>{{newCardProcess.card.name}}: Which column?
+              <button role="button" class="btn btn-link btn-lg pull-right btn-close" ng-click="newCard_backToSelect()">
+                <span class="glyphicon glyphicon-remove"></span>
+              </button>
+            </h3>
+          </div>
+          <button role="button" class="btn btn-default btn-col" ng-repeat="col in outputColumns" ng-click="newCard_selectColumn(col)">{{col}}</button>
         </div>
 
 

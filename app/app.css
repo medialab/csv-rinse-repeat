@@ -280,14 +280,18 @@ th.data-cell{
   padding: 12px;
 }
 
+.select-card-container{
+  padding: 12px;
+}
+
 .select-card-container .card-type{
   position: relative;
   display: inline-block;
   overflow: hidden;
   width: 270px;
   height: 102px;
-  margin-top: 12px;
-  margin-left: 12px;
+  margin-right: 12px;
+  margin-bottom: 12px;
 
   /*background-color: #EEE;*/
 
@@ -351,11 +355,15 @@ th.data-cell{
   padding: 12px;
 }
 
-.card-options-container h3{
+.select-card-header h3{
   margin-top: 0px;
 }
 
-.card-options-container .btn{
+.select-card-header .btn-close{
+  padding: 0;
+}
+
+.card-options-container .btn-col{
   margin-right: 12px;
 }
 
