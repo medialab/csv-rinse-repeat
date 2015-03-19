@@ -135,8 +135,9 @@ angular.module('rerere.view_board', ['ngRoute'])
     $scope.newCardProcess.active = false
     addCard($scope.newCardProcess.card.id, col)
 
-    if(_output)
+    if(_output){
       $timeout(cardCascadeUpdate, 0)
+    }
   }
 
 
@@ -226,7 +227,12 @@ angular.module('rerere.view_board', ['ngRoute'])
           $('#' + column_id).html('')
 
           // Draw
-          card.draw(id, _output, {column_id: column_id})
+          try{
+            card.draw(id, _output, {column_id: column_id})
+          } catch(e){
+            // $('#' + id).html('<div class="alert alert-danger" role="alert">Oops, an error occurred</div>')
+            console.log(e)
+          }
 
           // Mark as updated
           cardUpdateMap.set(id, false)
