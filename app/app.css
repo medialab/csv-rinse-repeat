@@ -269,3 +269,75 @@ th.data-cell{
   right: 6px;
   bottom: 6px;
 }
+
+/* Add viz cards */
+.add-card-container{
+  padding: 12px;
+}
+
+.select-card-container .card-type{
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  width: 270px;
+  height: 102px;
+  margin-top: 12px;
+  margin-left: 12px;
+
+  /*background-color: #EEE;*/
+
+  border: 1px solid #EEE;
+
+          box-shadow: 1px 1px 5px 0px #eee;
+       -o-box-shadow: 1px 1px 5px 0px #eee;
+     -moz-box-shadow: 1px 1px 5px 0px #eee;
+  -webkit-box-shadow: 1px 1px 5px 0px #eee;
+
+  user-select: none;
+  cursor: pointer;
+
+}
+
+.select-card-container .card-type .card-image{
+  float: left;
+  overflow: hidden;
+}
+
+.select-card-container .card-type .card-name{
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+
+  padding-top: 6px;
+  padding-left: 112px;
+}
+
+.select-card-container .card-type .card-description{
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 11px;
+  color: #999;
+
+  padding-top: 3px;
+  padding-left: 112px;
+  padding-right: 2px;
+}
+
+.select-card-container .card-type .card-type-overlay{
+  position: absolute;
+  top:0;
+  left:0;
+  bottom:0;
+  right:0;
+  background-color: rgba(50, 50, 50, 0);
+  text-align: center;
+  color: rgba(255, 255, 255, 0);
+  font-size: 52px;
+  font-family: Roboto, sans-serif;
+  font-weight: 300;
+  padding-top: 8px;
+}
+
+.select-card-container .card-type:hover .card-type-overlay{
+  background-color: rgba(40, 70, 100, 0.25);
+  color: rgba(255, 255, 255, 1);
+}

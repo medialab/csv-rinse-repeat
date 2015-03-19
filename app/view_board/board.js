@@ -9,8 +9,8 @@ angular.module('rerere.view_board', ['ngRoute'])
   });
 }])
 
-.controller('BoardCtrl', ['$scope', '$timeout', 'cards'
-  ,function(               $scope ,  $timeout ,  cards ) {
+.controller('BoardCtrl', ['$scope', '$timeout',  'cards'
+  ,function(               $scope ,  $timeout ,  _cards ) {
 
   var currentCardId = 0
     , _output
@@ -24,6 +24,7 @@ angular.module('rerere.view_board', ['ngRoute'])
   $scope.outputRowsCount = 1
 
   $scope.cards = []
+  $scope.cardTypes = _cards.cardsList
   var cardUpdateMap = d3.map()
 
   $scope.startingCode = '// Edit your data here\ndata = data\n.map(function(d, i){\nreturn i\n})'
@@ -129,9 +130,9 @@ angular.module('rerere.view_board', ['ngRoute'])
     // addCard('calendarview', 'timestamp')
     // addCard('wordcloud', 'text')
     // addCard('topwords', 'text')
-    addCard('topitems', 'lang')
+    // addCard('topitems', 'lang')
     // addCard('volumeovertime_day', 'timestamp')
-    addCard('mapcoordinates', 'coordinates')
+    // addCard('mapcoordinates', 'coordinates')
 
     // Load Test CSV
     d3.csv("test.csv")
@@ -182,7 +183,7 @@ angular.module('rerere.view_board', ['ngRoute'])
   function addCard(card_type, column_id){
     try{
       var id = 'card_' + currentCardId++
-        , card = cards[card_type]
+        , card = _cards[card_type]
       $scope.cards.push({
         card: card
         ,id: id

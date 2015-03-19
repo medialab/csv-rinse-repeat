@@ -6,6 +6,10 @@ angular.module('rerere.cards.mapcoordinates', [])
   function() {
     var ns = {}
 
+    ns.name = "MAP COORDINATES"
+
+    ns.description = "Geographical distribution of items with dynamic clustering. Coordinates format: '0.0::0.0' (latitude - longitude)"
+
     // Function called to draw the interface
     ns.draw = function(container_id, table, options){
       

@@ -5,11 +5,11 @@
 // The goal here is just to make adding cards easier.
 
 var cardlist = 
-[ 'calendarview'
+[ 'topitems'
 , 'wordcloud'
 , 'topwords'
-, 'topitems'
 , 'volumeovertime_day'
+, 'calendarview'
 , 'mapcoordinates'
 ]
 
@@ -19,8 +19,14 @@ angular.module('rerere.cards', cardlist.map(function(c){return 'rerere.cards.' +
   var ns = {}
 
   for(let i in arguments){
-    ns[cardlist[i]] = arguments[i]
+    var card = arguments[i]
+    card.imageSource = card.imageSource || 'components/cards/' + cardlist[i] + '.png'
+    ns[cardlist[i]] = card
   }
+
+  ns.cardsList = cardlist.map(function(d){
+    return ns[d]
+  })
 
   return ns
 }))

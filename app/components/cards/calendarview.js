@@ -6,6 +6,10 @@ angular.module('rerere.cards.calendarview', [])
   function() {
     var ns = {} // Namespace
 
+    ns.name = "CALENDAR"
+
+    ns.description = "Daily count of items in a calendar view"
+
     ns.draw = function(container_id, table, options){
       
       var column_id = options.column_id

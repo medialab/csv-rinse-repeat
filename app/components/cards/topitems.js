@@ -6,6 +6,10 @@ angular.module('rerere.cards.topitems', [])
   function() {
     var ns = {}
 
+    ns.name = "ITEMS TOP 50"
+
+    ns.description = "List of the 50 most occurrent items"
+
     // Function called to draw the interface
     ns.draw = function(container_id, table, options){
       

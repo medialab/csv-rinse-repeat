@@ -6,6 +6,10 @@ angular.module('rerere.cards.volumeovertime_day', [])
   function() {
     var ns = {}
 
+    ns.name = "DAILY VOLUME"
+
+    ns.description = "Daily count of items as a bar chart"
+
     // Function called to draw the interface
     ns.draw = function(container_id, table, options){
       
