@@ -9,8 +9,8 @@ angular.module('rerere.view_board', ['ngRoute'])
   });
 }])
 
-.controller('BoardCtrl', ['$scope', '$timeout',  'cards'
-  ,function(               $scope ,  $timeout ,  _cards ) {
+.controller('BoardCtrl', ['$scope', '$timeout',  'cards', 'store', '$location'
+  ,function(               $scope ,  $timeout ,  _cards ,  store ,  $location) {
 
   var currentCardId = 0
     , _output
@@ -33,8 +33,6 @@ angular.module('rerere.view_board', ['ngRoute'])
   $scope.startingCode = '// Edit your data here\ndata = data\n.map(function(d, i){\nreturn i\n})'
   
   $('div.split-pane').splitPane()
-
-  init()
 
   // Scope functions
   $scope.previewRandomInputRows = function(){
@@ -141,25 +139,41 @@ angular.module('rerere.view_board', ['ngRoute'])
       $timeout(cardCascadeUpdate, 0)
   }
 
-  // Internal functions
-  function init(){
-    // Init Ace JS editor panel
-    // Note: we keep editor in global scope to be able to edit settings from the console
-    window.editor = ace.edit("js-editor");
-    window.editor.setTheme("ace/theme/chrome");
-    window.editor.setFontSize(14)
-    window.editor.getSession().setMode("ace/mode/javascript");
 
-    // Load Test CSV
-    d3.csv("test.csv")
-      .get(function(error, rows) {
-        _input = rows
-        $scope.outputColumns = d3.keys(_input[0])
-        $scope.previewRandomInputRows()
-        $scope.$apply()
-      })
+  // INITIALIZATION
+  // Init Ace JS editor panel
+  // Note: we keep editor in global scope to be able to edit settings from the console
+  window.editor = ace.edit("js-editor");
+  window.editor.setTheme("ace/theme/chrome");
+  window.editor.setFontSize(14)
+  window.editor.getSession().setMode("ace/mode/javascript");
+
+  var csv_string = store.get('csv')
+  if(csv_string){
+    _input = d3.csv.parse(csv_string)
+    $scope.outputColumns = d3.keys(_input[0])
+    $scope.previewRandomInputRows()
+    // $scope.$apply()
+  } else {
+    $timeout(function(){
+      $location.url('/upload')
+    }, 150)
   }
 
+  // Load Test CSV
+  /*d3.csv("test.csv")
+    .get(function(error, rows) {
+      _input = rows
+      $scope.outputColumns = d3.keys(_input[0])
+      $scope.previewRandomInputRows()
+      $scope.$apply()
+    })*/
+
+
+
+
+
+  // Internal functions
   function updateCards(){
     
     $scope.cards.forEach(function(card){

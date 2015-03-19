@@ -358,3 +358,94 @@ th.data-cell{
 .card-options-container .btn{
   margin-right: 12px;
 }
+
+
+
+
+/* Uploader */
+.upload-background{
+  background-color: #EDE9E2;
+}
+.upload-area-container{
+  position: relative;
+  left: 50%;
+  top: 50%;
+  width:0;
+  height:0;
+
+  user-select: none;
+  cursor: pointer;
+
+}
+.upload-area-container .upload-area{
+  width: 300px;
+  height: 300px;
+  background-color: #FFFFFF;
+  box-sizing: border-box;
+  transform-origin: 150px 150px;
+  transform: translate(-150px,-150px) rotate(-45deg);
+  box-shadow: -2px 2px 3px 0 rgba(0, 0, 0, 0.1);
+
+  -webkit-transition: background-color .2s; /* Safari */
+          transition: background-color .2s;
+}
+.upload-area-container:hover .upload-area, .upload-area-container.over .upload-area{
+  background-color: #337ab7;
+}
+.upload-area-container.loading .upload-area{
+  background-color: #46b8da;
+}
+.upload-area-container.success .upload-area{
+  background-color: #5cb85c;
+}
+.upload-text{
+  position: absolute;
+  margin-top: -40px;
+  top: 0px;
+  font-weight: 300;
+  text-align: center;
+  width: 500px;
+  margin-left: -250px;
+}
+.upload-text .upload-text-main{
+  font-family: 'Roboto', sans-serif;
+  font-size: 48px;
+}
+.upload-area-container:hover   .upload-text .upload-text-main,
+.upload-area-container.over    .upload-text .upload-text-main,
+.upload-area-container.loading .upload-text .upload-text-main,
+.upload-area-container.success .upload-text .upload-text-main
+{
+  color: #FFF;
+}
+.upload-text .upload-text-sub{
+  font-family: 'Roboto', sans-serif;
+  color: #AAA;
+  font-size: 18px;
+}
+.upload-area-container:hover   .upload-text .upload-text-sub,
+.upload-area-container.over    .upload-text .upload-text-sub
+{
+  color: #FFF;
+}
+.upload-area-container.loading .upload-text .upload-text-sub,
+.upload-area-container.success .upload-text .upload-text-sub
+{
+  display: none;
+}
+.upload-icon{
+  position: absolute;
+  margin-top: -120px;
+  top: 0px;
+  font-size: 52px;
+  width: 500px;
+  margin-left: -250px;
+  text-align: center;
+}
+.upload-area-container:hover   .upload-icon,
+.upload-area-container.over    .upload-icon,
+.upload-area-container.loading .upload-icon,
+.upload-area-container.success .upload-icon
+{
+  color: #FFF;
+}

@@ -1,1 +1,26 @@
-<p>This is the partial for view 1.</p>
+<div class="upload-background">
+  <div
+    class="upload-area-container"
+    id="uploader"
+    ng-paste="handlePaste()"
+    ng-click="loadFile()"
+    ng-class="dropClass"
+  >
+    <div class="upload-area">
+    </div>
+    <div class="upload-icon">
+      <span class="glyphicon glyphicon-open"></span>
+    </div>
+    <div class="upload-text">
+      <div class="upload-text-main">
+        {{loadingMessage=='' ? 'UPLOAD CSV' : loadingMessage}}
+      </div>
+      <div class="upload-text-sub">
+        CLICK or DRAG A FILE
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- This hidden input is used for loading the files via the dropdown of the nav tabs -->
+<input id="hidden-file-input" type="file" name="hidden-file-input" style="display: none;" onchange="angular.element(this).scope().setFile(this)"/>
