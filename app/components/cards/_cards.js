@@ -18,7 +18,7 @@ angular.module('rerere.cards', cardlist.map(function(c){return 'rerere.cards.' +
 .factory('cards', cardlist.concat(function(){
   var ns = {}
 
-  for(let i in arguments){
+  for(var i in arguments){
     var card = arguments[i]
     card.id = cardlist[i]
     card.imageSource = card.imageSource || 'components/cards/' + card.id + '.png'

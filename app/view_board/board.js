@@ -37,7 +37,7 @@ angular.module('rerere.view_board', ['ngRoute'])
   // Scope functions
   $scope.previewRandomInputRows = function(){
     $scope.inputLinePreviews = []
-    for(let i=0; i<$scope.inputRowsCount; i++){
+    for(var i=0; i<$scope.inputRowsCount; i++){
       var rowId = Math.floor(Math.random() * (_input.length))
       ,row = _input[rowId]
       $scope.inputLinePreviews.push({
@@ -57,7 +57,7 @@ angular.module('rerere.view_board', ['ngRoute'])
 
   $scope.previewRandomOutputRows = function(){
     $scope.outputLinePreviews = []
-    for(let i=0; i<$scope.outputRowsCount; i++){
+    for(var i=0; i<$scope.outputRowsCount; i++){
       var rowId = Math.floor(Math.random() * (_output.length))
       ,row = _output[rowId]
       $scope.outputLinePreviews.push({
