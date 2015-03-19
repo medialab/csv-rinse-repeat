@@ -127,7 +127,7 @@ output = input.filter(function(item, i){
     <div class="split-pane-divider" id="vertical-divider"></div>
     <div class="split-pane-component" id="right-component">
       <div class="theme-split-pane-component-inner">
-        <div class="viz-cards-container" ng-show="false">
+        <div class="viz-cards-container" ng-show="!newCardProcess.active">
 
           <div class="viz-card" ng-repeat="card in cards">
             <div class="viz-card-title">
@@ -137,24 +137,30 @@ output = input.filter(function(item, i){
               <!-- <button class="btn btn-xs btn-default"><span class="glyphicon glyphicon-fullscreen"></span> FULLSCREEN</button> -->
             </div>
             <div class="d3-panel" id="{{card.id}}">
+              <p class="no-output-message">no output to visualize</p>
             </div>
           </div>
 
-          <!-- <div class="add-card-container">
-            <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> ADD VIZ</button>
-          </div> -->
+          <div class="add-card-container">
+            <button type="button" class="btn btn-default" ng-click="newCard_addViz()"><span class="glyphicon glyphicon-plus"></span> ADD VIZ</button>
+          </div>
 
         </div>
 
-        <div class="select-card-container">
+        <div class="select-card-container" ng-show="newCardProcess.active && newCardProcess.step == 'select'">
 
-          <div class="card-type" ng-repeat="card in cardTypes">
+          <div class="card-type" ng-repeat="card in cardTypes" ng-click="newCard_selectViz(card)">
             <div class="card-image"><img ng-src="{{card.imageSource}}"/></div>
             <div class="card-name">{{card.name}}</div>
             <div class="card-description">{{card.description}}</div>
             <div class="card-type-overlay">+</div>
           </div>
           
+        </div>
+
+        <div class="card-options-container" ng-show="newCardProcess.active && newCardProcess.step == 'options'">
+          <h3>{{newCardProcess.card.name}}: Which column?</h3>
+          <button role="button" class="btn btn-default" ng-repeat="col in outputColumns" ng-click="newCard_selectColumn(col)">{{col}}</button>
         </div>
 
 

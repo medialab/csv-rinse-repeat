@@ -20,7 +20,8 @@ angular.module('rerere.cards', cardlist.map(function(c){return 'rerere.cards.' +
 
   for(let i in arguments){
     var card = arguments[i]
-    card.imageSource = card.imageSource || 'components/cards/' + cardlist[i] + '.png'
+    card.id = cardlist[i]
+    card.imageSource = card.imageSource || 'components/cards/' + card.id + '.png'
     ns[cardlist[i]] = card
   }
 

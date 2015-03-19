@@ -16,12 +16,15 @@ angular.module('rerere.view_board', ['ngRoute'])
     , _output
     , _input
 
+  $scope.outputColumns = []
   $scope.inputLinePreviews = false
   $scope.outputLinePreviews = false
   $scope.outputError = false
 
   $scope.inputRowsCount = 1
   $scope.outputRowsCount = 1
+
+  $scope.newCardProcess = {active:false}
 
   $scope.cards = []
   $scope.cardTypes = _cards.cardsList
@@ -106,15 +109,36 @@ angular.module('rerere.view_board', ['ngRoute'])
     
     if(success){
       _output = output
+      $scope.outputColumns = d3.keys(_output[0])
       $scope.previewRandomOutputRows()
       $scope.outputError = false
 
       updateCards()
     } else {
       _output = false
+      $scope.outputColumns = d3.keys(_output[0])
       $scope.outputLinePreview = false
     }
 
+  }
+
+  $scope.newCard_addViz = function(){
+    $scope.newCardProcess.active = true
+    $scope.newCardProcess.step = 'select'
+  }
+
+  $scope.newCard_selectViz = function(card){
+    $scope.newCardProcess.active = true
+    $scope.newCardProcess.card = card
+    $scope.newCardProcess.step = 'options'
+  }
+
+  $scope.newCard_selectColumn = function(col){
+    $scope.newCardProcess.active = false
+    addCard($scope.newCardProcess.card.id, col)
+
+    if(_output)
+      $timeout(cardCascadeUpdate, 0)
   }
 
   // Internal functions
@@ -126,18 +150,11 @@ angular.module('rerere.view_board', ['ngRoute'])
     window.editor.setFontSize(14)
     window.editor.getSession().setMode("ace/mode/javascript");
 
-    // Add starting cards
-    // addCard('calendarview', 'timestamp')
-    // addCard('wordcloud', 'text')
-    // addCard('topwords', 'text')
-    // addCard('topitems', 'lang')
-    // addCard('volumeovertime_day', 'timestamp')
-    // addCard('mapcoordinates', 'coordinates')
-
     // Load Test CSV
     d3.csv("test.csv")
       .get(function(error, rows) {
         _input = rows
+        $scope.outputColumns = d3.keys(_input[0])
         $scope.previewRandomInputRows()
         $scope.$apply()
       })
@@ -181,6 +198,7 @@ angular.module('rerere.view_board', ['ngRoute'])
   }
 
   function addCard(card_type, column_id){
+    console.log(card_type, column_id)
     try{
       var id = 'card_' + currentCardId++
         , card = _cards[card_type]
@@ -204,7 +222,12 @@ angular.module('rerere.view_board', ['ngRoute'])
           $timeout(cardCascadeUpdate, 300)
 
         }
+
       })
+
+      // Mark as 'to update'
+      cardUpdateMap.set(id, true)
+
     } catch(e) {
       console.log('Card could not be added', card_type, e)
     }

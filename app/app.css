@@ -259,6 +259,11 @@ th.data-cell{
   height: 100px;
 }
 
+.viz-card .d3-panel .no-output-message{
+  padding: 12px;
+  color: #AAA;
+}
+
 .viz-card .d3-panel .card-loading{
   padding: 24px;
   text-align: center;
@@ -340,4 +345,16 @@ th.data-cell{
 .select-card-container .card-type:hover .card-type-overlay{
   background-color: rgba(40, 70, 100, 0.25);
   color: rgba(255, 255, 255, 1);
+}
+
+.card-options-container{
+  padding: 12px;
+}
+
+.card-options-container h3{
+  margin-top: 0px;
+}
+
+.card-options-container .btn{
+  margin-right: 12px;
 }
