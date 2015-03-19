@@ -272,7 +272,12 @@ th.data-cell{
 .viz-card .float-buttons{
   position: absolute;
   right: 6px;
-  bottom: 6px;
+  top: 6px;
+  display: none;
+}
+
+.viz-card:hover .float-buttons{
+  display: initial;
 }
 
 /* Add viz cards */

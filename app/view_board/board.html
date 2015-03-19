@@ -134,7 +134,9 @@ output = input.filter(function(item, i){
               {{card.title}}
             </div>
             <div class="float-buttons">
-              <!-- <button class="btn btn-xs btn-default"><span class="glyphicon glyphicon-fullscreen"></span> FULLSCREEN</button> -->
+              <button class="btn btn-xs btn-default" ng-click="removeCard(card.id)">
+                <span class="glyphicon glyphicon-remove"></span> REMOVE
+              </button>
             </div>
             <div class="d3-panel" id="{{card.id}}">
               <p class="no-output-message">no output to visualize</p>

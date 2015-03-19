@@ -150,6 +150,10 @@ angular.module('rerere.view_board', ['ngRoute'])
     }
   }
 
+  $scope.removeCard = function(cardId){
+    removeCard(cardId)
+  }
+
 
   // INITIALIZATION
   // Init Ace JS editor panel
@@ -260,6 +264,13 @@ angular.module('rerere.view_board', ['ngRoute'])
     } catch(e) {
       console.log('Card could not be added', card_type, e)
     }
+  }
+
+  function removeCard(cardId){
+    $scope.cards = $scope.cards.filter(function(c){
+      return c.id != cardId
+    })
+    cardUpdateMap.set(cardId, false)
   }
 
 }]);
