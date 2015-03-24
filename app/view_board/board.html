@@ -20,11 +20,11 @@
               <table class="table table-condensed">
                 <tr>
                   <th class="data-cell text-info">row #</th>
-                  <th ng-repeat="key in inputLinePreviews[0].keys" class="data-cell">{{key}}</th>
+                  <th ng-repeat="key in inputLinePreviews[0].keys track by $index" class="data-cell">{{key}}</th>
                 </tr>
-                <tr ng-repeat="inputLinePreview in inputLinePreviews">
+                <tr ng-repeat="inputLinePreview in inputLinePreviews track by $index">
                   <td class="data-cell text-info">{{inputLinePreview.rowId}}</td>
-                  <td ng-repeat="cell in inputLinePreview.content" class="data-cell">{{cell}}</td>
+                  <td ng-repeat="cell in inputLinePreview.content track by $index" class="data-cell">{{cell}}</td>
                 </tr>
               </table>
             </div>
