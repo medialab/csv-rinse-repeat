@@ -157,7 +157,7 @@ angular.module('rerere.view_board', ['ngRoute'])
   $scope.downloadCard = function(cardId){
     $scope.cards.forEach(function(c){
       if(c.id == cardId){
-        c.card.download(c.id)
+        c.card.download()
       }
     })
   }
@@ -244,16 +244,17 @@ angular.module('rerere.view_board', ['ngRoute'])
         ,column: column_id
         ,title: column_id.toUpperCase().replace('_', ' ') + ' - ' + card.name
         ,update: function(){
+          var container = document.querySelector('#'+id)
 
           // Clean
-          $('#' + id).html('')
+          container.innerHTML = ''
 
           // Draw
           try{
-            card.draw(id, _output, {column_id: column_id})
+            card.draw(container.shadowRoot || container.createShadowRoot(), _output, {column_id: column_id})
           } catch(e){
-            $('#' + id).html('<div class="alert alert-danger" role="alert">Oops, an error occurred</div>')
-            console.log('Error while drawing card #'+id + '\n\n' +e.stack)
+            container.innerHTML = '<div class="alert alert-danger" role="alert">Oops, an error occurred</div>'
+            console.log('[ERROR] trying to display #'+id + '\n' +e.stack)
           }
 
           // Mark as updated

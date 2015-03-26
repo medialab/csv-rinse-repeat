@@ -10,31 +10,17 @@ angular.module('rerere.cards.calendarview', [])
 
     ns.description = "Daily count of items in a calendar view"
 
-    ns.shadowRoot = undefined // This will be referenced during draw
+    ns.shadowContainer = undefined  // Referenced in ns.draw
 
-    ns.download = function(container_id){
-      var svgContainer = ns.shadowRoot.querySelector('svg')
-        , w = svgContainer.offsetWidth
-        , h = svgContainer.offsetHeight
-        , content = []
-
-      content.push('<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'">')
-      content.push(svgContainer.innerHTML)
-      content.push('</svg>')
-
-      var blob = new Blob([content], {type: "image/svg+xml;charset=utf-8"})
-      saveAs(blob, ns.name + ".svg")
-
-    }
-
-    ns.draw = function(container_id, table, options){
+    ns.draw = function(shadowContainer, table, options){
       
       var column_id = options.column_id
       
-      // Reset the content of the container
-      ns.shadowRoot = document.querySelector('#'+container_id).createShadowRoot()
-      
-      ns.shadowRoot.innerHTML = ''
+      // Register shadow container
+      ns.shadowContainer = shadowContainer
+
+      // Clean it
+      ns.shadowContainer.innerHTML = ''
 
       // Initialize date formats we will use later
       var day = d3.time.format("%w")
@@ -59,13 +45,13 @@ angular.module('rerere.cards.calendarview', [])
         .map(function(d){return +d})                          // Ensure they are numbers
 
       // Graphic variables for integration in the interface
-      var width = $('#'+container_id).width()                 // Width of the graphical space cannot be set, we just get it
+      var width = shadowContainer.host.offsetWidth                  // Width of the graphical space cannot be set, we just get it
         , cellSize = 14                                       // Size of the date cells, impacts height
         , height = (17 + 7 * cellSize) * years.length         // Height can be set (for yearly block)
         , padding_top = 20                                    // Padding added because the title uses space in the UI
 
       // Setting size of graphical container
-      $('#'+container_id).css('height', (height + 12) + 'px')
+      shadowContainer.host.style.height = (height + 12) + 'px'
 
       // 'color' maps values to CSS classes 'q0-11' to 'q10-11' containing a color scale
       var color = d3.scale.quantize()                         // Specifies a discrete scale as a mapping function
@@ -76,7 +62,7 @@ angular.module('rerere.cards.calendarview', [])
             )
 
       // Draw each year as a different calendar block
-      var svg = d3.select(ns.shadowRoot).selectAll("svg")
+      var svg = d3.select(ns.shadowContainer).selectAll("svg")
           .data(d3.range(d3.min(years), d3.max(years)+1))     // Bind years to svg elements in container
         .enter().append("svg")                                // Create a SVG for each year
           .attr("width", width)                               // Width of yearly block
@@ -131,10 +117,9 @@ angular.module('rerere.cards.calendarview', [])
             })
 
       // Inject CSS
-      window.X = ns.shadowRoot
       var s = document.createElement('style')
       s.innerText = ns.css
-      ns.shadowRoot.querySelector('svg').appendChild(s)
+      ns.shadowContainer.querySelector('svg').appendChild(s)
 
       // Drawing the path surronding months in calendar
       function monthPath(t0) {
@@ -147,6 +132,21 @@ angular.module('rerere.cards.calendarview', [])
             + "H" + (w1 + 1) * cellSize + "V" + 0
             + "H" + (w0 + 1) * cellSize + "Z";
       }
+    }
+
+    ns.download = function(){
+      var svgContainer = ns.shadowContainer.querySelector('svg')
+        , w = svgContainer.offsetWidth
+        , h = svgContainer.offsetHeight
+        , content = []
+
+      content.push('<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'">')
+      content.push(svgContainer.innerHTML)
+      content.push('</svg>')
+
+      var blob = new Blob([content], {type: "image/svg+xml;charset=utf-8"})
+      saveAs(blob, ns.name + ".svg")
+
     }
 
     // The CSS to be injected
