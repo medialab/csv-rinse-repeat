@@ -10,20 +10,19 @@ angular.module('rerere.cards.calendarview', [])
 
     ns.description = "Daily count of items in a calendar view"
 
+    ns.shadowRoot = undefined // This will be referenced during draw
+
     ns.download = function(container_id){
-      var svgContainer = $('#'+container_id + ' svg')
-        , w = svgContainer.width()
-        , h = svgContainer.height()
+      var svgContainer = ns.shadowRoot.querySelector('svg')
+        , w = svgContainer.offsetWidth
+        , h = svgContainer.offsetHeight
         , content = []
 
       content.push('<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'">')
-      content.push(svgContainer.html())
-      content.push('<style>' + ns.css + '</style>')
+      content.push(svgContainer.innerHTML)
       content.push('</svg>')
 
-      console.log('Print blob', content)
-
-      var blob = new Blob(content, {type: "image/svg+xml;charset=utf-8"})
+      var blob = new Blob([content], {type: "image/svg+xml;charset=utf-8"})
       saveAs(blob, ns.name + ".svg")
 
     }
@@ -33,8 +32,9 @@ angular.module('rerere.cards.calendarview', [])
       var column_id = options.column_id
       
       // Reset the content of the container
-      $('#'+container_id)
-        .html('')
+      ns.shadowRoot = document.querySelector('#'+container_id).createShadowRoot()
+      
+      ns.shadowRoot.innerHTML = ''
 
       // Initialize date formats we will use later
       var day = d3.time.format("%w")
@@ -76,7 +76,7 @@ angular.module('rerere.cards.calendarview', [])
             )
 
       // Draw each year as a different calendar block
-      var svg = d3.select('#'+container_id).selectAll("svg")
+      var svg = d3.select(ns.shadowRoot).selectAll("svg")
           .data(d3.range(d3.min(years), d3.max(years)+1))     // Bind years to svg elements in container
         .enter().append("svg")                                // Create a SVG for each year
           .attr("width", width)                               // Width of yearly block
@@ -131,7 +131,10 @@ angular.module('rerere.cards.calendarview', [])
             })
 
       // Inject CSS
-      $('#' + container_id + ' svg').append($('<style/>').text(ns.css))
+      window.X = ns.shadowRoot
+      var s = document.createElement('style')
+      s.innerText = ns.css
+      ns.shadowRoot.querySelector('svg').appendChild(s)
 
       // Drawing the path surronding months in calendar
       function monthPath(t0) {
