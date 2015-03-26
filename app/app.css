@@ -259,6 +259,10 @@ th.data-cell{
   height: 100px;
 }
 
+.viz-card .d3-panel .alert{
+  margin: 12px;
+}
+
 .viz-card .d3-panel .no-output-message{
   padding: 12px;
   color: #AAA;
@@ -274,6 +278,7 @@ th.data-cell{
   right: 6px;
   top: 6px;
   display: none;
+  z-index: 10;
 }
 
 .viz-card:hover .float-buttons{
@@ -462,3 +467,5 @@ th.data-cell{
 {
   color: #FFF;
 }
+
+

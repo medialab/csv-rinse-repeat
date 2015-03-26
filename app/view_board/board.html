@@ -124,6 +124,7 @@ output = input.filter(function(item, i){
 
       </div>
     </div>
+
     <div class="split-pane-divider" id="vertical-divider"></div>
     <div class="split-pane-component" id="right-component">
       <div class="theme-split-pane-component-inner">
@@ -134,9 +135,14 @@ output = input.filter(function(item, i){
               {{card.title}}
             </div>
             <div class="float-buttons">
+              <button class="btn btn-xs btn-default" ng-click="downloadCard(card.id)" ng-if="card.card.download">
+                <span class="glyphicon glyphicon-download"></span> DOWNLOAD
+              </button>
+
               <button class="btn btn-xs btn-default" ng-click="removeCard(card.id)">
                 <span class="glyphicon glyphicon-remove"></span> REMOVE
               </button>
+
             </div>
             <div class="d3-panel" id="{{card.id}}">
               <p class="no-output-message">no output to visualize</p>

@@ -154,6 +154,14 @@ angular.module('rerere.view_board', ['ngRoute'])
     removeCard(cardId)
   }
 
+  $scope.downloadCard = function(cardId){
+    $scope.cards.forEach(function(c){
+      if(c.id == cardId){
+        c.card.download(c.id)
+      }
+    })
+  }
+
 
   // INITIALIZATION
   // Init Ace JS editor panel
@@ -238,14 +246,14 @@ angular.module('rerere.view_board', ['ngRoute'])
         ,update: function(){
 
           // Clean
-          $('#' + column_id).html('')
+          $('#' + id).html('')
 
           // Draw
           try{
             card.draw(id, _output, {column_id: column_id})
           } catch(e){
-            // $('#' + id).html('<div class="alert alert-danger" role="alert">Oops, an error occurred</div>')
-            console.log(e)
+            $('#' + id).html('<div class="alert alert-danger" role="alert">Oops, an error occurred</div>')
+            console.log('Error while drawing card #'+id + '\n\n' +e.stack)
           }
 
           // Mark as updated

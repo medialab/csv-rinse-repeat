@@ -10,14 +10,31 @@ angular.module('rerere.cards.calendarview', [])
 
     ns.description = "Daily count of items in a calendar view"
 
+    ns.download = function(container_id){
+      var svgContainer = $('#'+container_id + ' svg')
+        , w = svgContainer.width()
+        , h = svgContainer.height()
+        , content = []
+
+      content.push('<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'">')
+      content.push(svgContainer.html())
+      content.push('<style>' + ns.css + '</style>')
+      content.push('</svg>')
+
+      console.log('Print blob', content)
+
+      var blob = new Blob(content, {type: "image/svg+xml;charset=utf-8"})
+      saveAs(blob, ns.name + ".svg")
+
+    }
+
     ns.draw = function(container_id, table, options){
       
       var column_id = options.column_id
       
-      // Reset the content of the container and inject the CSS
+      // Reset the content of the container
       $('#'+container_id)
-        .html('&shy;<style>' + ns.css + '</style>')
-        .append($('<div class="calendarview"></div>'))
+        .html('')
 
       // Initialize date formats we will use later
       var day = d3.time.format("%w")
@@ -59,8 +76,8 @@ angular.module('rerere.cards.calendarview', [])
             )
 
       // Draw each year as a different calendar block
-      var svg = d3.select('#'+container_id + ' .calendarview').selectAll("svg")
-          .data(d3.range(d3.min(years), d3.max(years)+1))     // With line above: bind years to svg elements in container
+      var svg = d3.select('#'+container_id).selectAll("svg")
+          .data(d3.range(d3.min(years), d3.max(years)+1))     // Bind years to svg elements in container
         .enter().append("svg")                                // Create a SVG for each year
           .attr("width", width)                               // Width of yearly block
           .attr("height", height)                             // Height of yearly block
@@ -113,6 +130,8 @@ angular.module('rerere.cards.calendarview', [])
               return d + ": " + data[d] + ' items'            // Add tooltip including the count
             })
 
+      // Inject CSS
+      $('#' + container_id + ' svg').append($('<style/>').text(ns.css))
 
       // Drawing the path surronding months in calendar
       function monthPath(t0) {
@@ -130,35 +149,34 @@ angular.module('rerere.cards.calendarview', [])
     // The CSS to be injected
     // Note: backslashes allow multiline text -  oes not work in every browser
     ns.css = "\
-.d3-panel .calendarview {\
+*{\
 font: 11px Roboto, sans-serif;\
 shape-rendering: crispEdges;\
 }\
 \
-.d3-panel .calendarview .day {\
+.day {\
 fill: #fff;\
 stroke: #f6f6f6;\
 }\
 \
-.d3-panel .calendarview .month {\
+.month {\
 fill: none;\
 stroke: #000;\
 stroke-width: 2px;\
 }\
 \
-.d3-panel .calendarview .q0-11{fill:#fff}\
-.d3-panel .calendarview .q1-11{fill:#ffffd9}\
-.d3-panel .calendarview .q2-11{fill:#edf8b1}\
-.d3-panel .calendarview .q3-11{fill:#c7e9b4}\
-.d3-panel .calendarview .q4-11{fill:#7fcdbb}\
-.d3-panel .calendarview .q5-11{fill:#41b6c4}\
-.d3-panel .calendarview .q6-11{fill:#1d91c0}\
-.d3-panel .calendarview .q7-11{fill:#225ea8}\
-.d3-panel .calendarview .q8-11{fill:#253494}\
-.d3-panel .calendarview .q9-11{fill:#081d58}\
-.d3-panel .calendarview .q10-11{fill:#000}\
+.q0-11{fill:#fff}\
+.q1-11{fill:#ffffd9}\
+.q2-11{fill:#edf8b1}\
+.q3-11{fill:#c7e9b4}\
+.q4-11{fill:#7fcdbb}\
+.q5-11{fill:#41b6c4}\
+.q6-11{fill:#1d91c0}\
+.q7-11{fill:#225ea8}\
+.q8-11{fill:#253494}\
+.q9-11{fill:#081d58}\
+.q10-11{fill:#000}\
 "
-
     return ns
   
 }])
