@@ -10,15 +10,18 @@ angular.module('rerere.cards.volumeovertime_day', [])
 
     ns.description = "Daily count of items as a bar chart"
 
+    ns.shadowContainer = undefined  // Referenced in ns.draw
+
     // Function called to draw the interface
-    ns.draw = function(container_id, table, options){
+    ns.draw = function(shadowContainer, table, options){
       
       var column_id = options.column_id
 
-      // Clean the container
-      $('#'+container_id)
-        .html('&shy;<style>' + ns.css + '</style>')
-        .append($('<div class="volumeovertime_day"></div>'))
+      // Register shadow container
+      ns.shadowContainer = shadowContainer
+
+      // Clean it
+      ns.shadowContainer.innerHTML = ''
 
       // Initialize date formats we will use later
       var day     = d3.time.format("%w")
@@ -38,12 +41,12 @@ angular.module('rerere.cards.volumeovertime_day', [])
           })
 
       var margin = {top: 20, right: 20, bottom: 30, left: 40}
-        , width = $('#'+container_id).width() - margin.left - margin.right
+        , width = shadowContainer.host.offsetWidth - margin.left - margin.right
         , containerHeight = 300
         , height = containerHeight - margin.top - margin.bottom
 
       // Setting size of graphical container
-      $('#'+container_id).css('height', containerHeight + 'px')
+      shadowContainer.host.style.height = containerHeight + 'px'
 
       var x = d3.scale.ordinal()
           .rangeRoundBands([0, width], .1)
@@ -64,7 +67,7 @@ angular.module('rerere.cards.volumeovertime_day', [])
           .orient("left")
           .ticks(10)
 
-      var svg = d3.select('#'+container_id + ' .volumeovertime_day').append("svg")
+      var svg = d3.select(ns.shadowContainer).append("svg")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
         .append("g")
@@ -98,33 +101,38 @@ angular.module('rerere.cards.volumeovertime_day', [])
           .attr("height", function(d) { return height - y(d.values); })
         .append("title")
           .text(function(d) { return d.key + ': ' + d.values + ' items' });
+
+      // Inject CSS
+      var s = document.createElement('style')
+      s.innerText = ns.css
+      ns.shadowContainer.querySelector('svg').appendChild(s)
     }
 
     ns.css = '\
-.volumeovertime_day {  \
+*{  \
   font-family: Roboto Condensed, sans-serif;  \
 } \
   \
-.volumeovertime_day .bar {  \
+.bar {  \
   fill: steelblue;  \
 } \
   \
-.volumeovertime_day .bar:hover {  \
+.bar:hover {  \
   fill: brown;  \
 } \
   \
-.volumeovertime_day .axis { \
+.axis { \
   font-size: 9px;  \
 } \
   \
-.volumeovertime_day .axis path, \
-.volumeovertime_day .axis line {  \
+.axis path, \
+.axis line {  \
   fill: none; \
   stroke: #000; \
   shape-rendering: crispEdges;  \
 } \
   \
-.volumeovertime_day .x.axis path {  \
+.x.axis path {  \
   display: none;  \
 }'
 

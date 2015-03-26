@@ -10,25 +10,33 @@ angular.module('rerere.cards.topitems', [])
 
     ns.description = "List of the 50 most occurrent items"
 
+    ns.shadowContainer = undefined  // Referenced in ns.draw
+
     // Function called to draw the interface
-    ns.draw = function(container_id, table, options){
+    ns.draw = function(shadowContainer, table, options){
       
       var column_id = options.column_id
       
-      // Clean the container
-      $('#'+container_id)
-        .html('&shy;<style>' + ns.css + '</style>')     // Inject CSS
-        .append($('<div class="topitems"></div>'))
+      // Register shadow container
+      ns.shadowContainer = shadowContainer
+
+      // Clean it
+      ns.shadowContainer.innerHTML = '<div class="content"></div>'
+
+      // Inject CSS
+      var s = document.createElement('style')
+      s.innerText = ns.css
+      ns.shadowContainer.appendChild(s)
 
       // Initialize various variables
       var items = table.map(function(d){
               return ''+d[column_id]                    // Extract text from the right column
             })
-        , width = $('#'+container_id).width()           // We cannot set width (comes from the framing UI)
+        , width = ns.shadowContainer.host.offsetWidth   // We cannot set width (comes from the framing UI)
         , height = 260                                  // But we can set height
 
       // Set container's height
-      $('#'+container_id).height(height)
+      ns.shadowContainer.host.style.height = height + 'px'
 
       // Tokenize and index the words
       var itemsMap = d3.map()                           // A d3 map works like an index object (key-value pairs)
@@ -52,7 +60,7 @@ angular.module('rerere.cards.topitems', [])
           })
 
       // Draw (html)
-      var p = d3.select('#'+container_id + ' .topitems').selectAll("p")
+      var p = d3.select(ns.shadowContainer.querySelector('.content')).selectAll("p")
           .data(words)
         .enter().append("p")
           // .attr("width", width)
@@ -63,7 +71,7 @@ angular.module('rerere.cards.topitems', [])
     }
 
     ns.css = '\
-.topitems{  \
+.content{  \
 font: 12px Roboto, sans-serif;  \
 padding-top: 6px;  \
 padding-bottom: 6px;  \
@@ -71,12 +79,15 @@ padding-bottom: 6px;  \
    -moz-column-count: 4; /* Firefox */  \
         column-count: 4;  \
 } \
-.topitems p{  \
+.content p{  \
 margin: 3px; \
 padding-left: 6px; \
 } \
-.topitems .text-muted{ \
+.content .text-muted{ \
 color: #AAA; \
+} \
+.content .text-info{ \
+color: #89A0BB; \
 }'
 
     return ns

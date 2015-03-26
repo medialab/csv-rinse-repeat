@@ -10,15 +10,21 @@ angular.module('rerere.cards.mapcoordinates', [])
 
     ns.description = "Geographical distribution of items with dynamic clustering. Coordinates format: '0.0::0.0' (latitude - longitude)"
 
+    ns.shadowContainer = undefined  // Referenced in ns.draw
+
     // Function called to draw the interface
-    ns.draw = function(container_id, table, options){
+    ns.draw = function(shadowContainer, table, options){
       
       var column_id = options.column_id
 
-      $('#' + container_id)
-        .html('')
-        .height(300)
-        .css('margin-top', '0px')
+      // Register shadow container
+      ns.shadowContainer = shadowContainer
+
+      // Clean it
+      ns.shadowContainer.innerHTML = '<div id="openlayers_map"></div>'
+
+      ns.shadowContainer.host.style.height = '300px'
+      ns.shadowContainer.host.style.marginTop = '0px'
 
       // Projections
       var fromProjection = new ol.proj.Projection({code: 'EPSG:4326'})
@@ -98,7 +104,7 @@ angular.module('rerere.cards.mapcoordinates', [])
       })
 
       var map = new ol.Map({
-        target: container_id,
+        target: ns.shadowContainer.querySelector('#openlayers_map'),
         layers: [
           new ol.layer.Tile({
             source: new ol.source.OSM()

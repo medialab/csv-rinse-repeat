@@ -12,6 +12,7 @@ angular.module('rerere.cards.calendarview', [])
 
     ns.shadowContainer = undefined  // Referenced in ns.draw
 
+    // Function called to draw the interface
     ns.draw = function(shadowContainer, table, options){
       
       var column_id = options.column_id
@@ -45,13 +46,13 @@ angular.module('rerere.cards.calendarview', [])
         .map(function(d){return +d})                          // Ensure they are numbers
 
       // Graphic variables for integration in the interface
-      var width = shadowContainer.host.offsetWidth                  // Width of the graphical space cannot be set, we just get it
+      var width = ns.shadowContainer.host.offsetWidth         // Width of the graphical space cannot be set, we just get it
         , cellSize = 14                                       // Size of the date cells, impacts height
         , height = (17 + 7 * cellSize) * years.length         // Height can be set (for yearly block)
         , padding_top = 20                                    // Padding added because the title uses space in the UI
 
       // Setting size of graphical container
-      shadowContainer.host.style.height = (height + 12) + 'px'
+      ns.shadowContainer.host.style.height = (height + 12) + 'px'
 
       // 'color' maps values to CSS classes 'q0-11' to 'q10-11' containing a color scale
       var color = d3.scale.quantize()                         // Specifies a discrete scale as a mapping function

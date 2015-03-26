@@ -244,16 +244,19 @@ angular.module('rerere.view_board', ['ngRoute'])
         ,column: column_id
         ,title: column_id.toUpperCase().replace('_', ' ') + ' - ' + card.name
         ,update: function(){
+
           var container = document.querySelector('#'+id)
+            , shadowRoot = container.shadowRoot || container.createShadowRoot()
 
           // Clean
           container.innerHTML = ''
+          shadowRoot.innerHTML = ''
 
           // Draw
           try{
-            card.draw(container.shadowRoot || container.createShadowRoot(), _output, {column_id: column_id})
+            card.draw(shadowRoot, _output, {column_id: column_id})
           } catch(e){
-            container.innerHTML = '<div class="alert alert-danger" role="alert">Oops, an error occurred</div>'
+            shadowRoot.innerHTML = '<h3 style="margin: 24px 12px 12px 12px; color: #C88B80;">Oops, viz crash (T_T)</h3>'
             console.log('[ERROR] trying to display #'+id + '\n' +e.stack)
           }
 
