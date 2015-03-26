@@ -10,7 +10,6 @@ angular.module('rerere.cards.wordcloud', [])
 
     ns.description = "Word cloud obtained from basic text mining"
 
-
     // Initalize stop words lists
     var en_stop_words = ['a','able','about','across','after','all','almost','also','am','among','an','and','any','are','as','at','be','because','been','but','by','can','cannot','could','dear','did','do','does','either','else','ever','every','for','from','get','got','had','has','have','he','her','hers','him','his','how','however','i','if','in','into','is','it','its','just','least','let','like','likely','may','me','might','most','must','my','neither','no','nor','not','of','off','often','on','only','or','other','our','own','rather','said','say','says','she','should','since','so','some','than','that','the','their','them','then','there','these','they','this','tis','to','too','twas','us','wants','was','we','were','what','when','where','which','while','who','whom','why','will','with','would','yet','you','your']
       , fr_stop_words = ['alors', 'au', 'aucuns', 'aussi', 'autre', 'avant', 'avec', 'avoir', 'bon', 'car', 'ce', 'cela', 'ces', 'ceux', 'chaque', 'ci', 'comme', 'comment', 'dans', 'des', 'du', 'dedans', 'dehors', 'depuis', 'devrait', 'doit', 'donc', 'dos', 'début', 'elle', 'elles', 'en', 'encore', 'essai', 'est', 'et', 'eu', 'fait', 'faites', 'fois', 'font', 'hors', 'ici', 'il', 'ils', 'je  juste', 'la', 'le', 'les', 'leur', 'là', 'ma', 'maintenant', 'mais', 'mes', 'mine', 'moins', 'mon', 'mot', 'même', 'ni', 'nommés', 'notre', 'nous', 'ou', 'où', 'par', 'parce', 'pas', 'peut', 'peu', 'plupart', 'pour', 'pourquoi', 'quand', 'que', 'quel', 'quelle', 'quelles', 'quels', 'qui', 'sa', 'sans', 'ses', 'seulement', 'si', 'sien', 'son', 'sont', 'sous', 'soyez sujet', 'sur', 'ta', 'tandis', 'tellement', 'tels', 'tes', 'ton', 'tous', 'tout', 'trop', 'très', 'tu', 'voient', 'vont', 'votre', 'vous', 'vu', 'ça', 'étaient', 'état', 'étions', 'été', 'être']
@@ -25,25 +24,29 @@ angular.module('rerere.cards.wordcloud', [])
           stop_words_index[w] = true
         })
 
+    ns.shadowContainer = undefined  // Referenced in ns.draw
+
     // Function called to draw the interface
-    ns.draw = function(container_id, table, options){
+    ns.draw = function(shadowContainer, table, options){
       
       var column_id = options.column_id
 
-      // Clean the container
-      $('#'+container_id)
-        .html('')
+      // Register shadow container
+      ns.shadowContainer = shadowContainer
+
+      // Clean it
+      ns.shadowContainer.innerHTML = ''
 
       // Initialize various variables
       var strings = table.map(function(d){
-              return ''+d[column_id]                    // Extract text from the right column
+              return ''+d[column_id]                         // Extract text from the right column
             })
-        , width = $('#'+container_id).width()           // We cannot set width (comes from the framing UI)
-        , height = 300                                  // But we can set height
-        , fill = d3.scale.category20()                  // Construct a new ordinal scale with a range of 20 categorical colors
+        , width = ns.shadowContainer.host.offsetWidth        // We cannot set width (comes from the framing UI)
+        , height = 300                                       // But we can set height
+        , fill = d3.scale.category20()                       // Construct a new ordinal scale with a range of 20 categorical colors
 
       // Set container's height
-      $('#'+container_id).height(height)
+      ns.shadowContainer.host.style.height = (height + 12) + 'px'
 
       // Tokenize and index the words
       var wordsMap = d3.map()                           // A d3 map works like an index object (key-value pairs)
@@ -101,7 +104,7 @@ angular.module('rerere.cards.wordcloud', [])
         
         // Note: the word cloud plugin provides coordinates and rotation for every word of the list
 
-        d3.select("#" + container_id).append("svg")     // We draw directly in the container
+        d3.select(ns.shadowContainer).append("svg")     // We draw directly in the container
             .attr("width", width)
             .attr("height", height)
           .append("g")                                  // Centering
