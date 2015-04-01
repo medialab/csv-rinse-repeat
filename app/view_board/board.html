@@ -109,9 +109,9 @@ output = input.filter(function(item, i){
                       <th class="data-cell text-info">row #</th>
                       <th ng-repeat="key in outputLinePreviews[0].keys" class="data-cell">{{key}}</th>
                     </tr>
-                    <tr ng-repeat="outputLinePreview in outputLinePreviews">
+                    <tr ng-repeat="outputLinePreview in outputLinePreviews track by $index">
                       <td class="data-cell text-info">{{outputLinePreview.rowId}}</td>
-                      <td ng-repeat="cell in outputLinePreview.content" class="data-cell">{{cell}}</td>
+                      <td ng-repeat="cell in outputLinePreview.content track by $index" class="data-cell">{{cell}}</td>
                     </tr>
                   </table>
                 </div>
