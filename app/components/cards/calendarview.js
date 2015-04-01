@@ -44,6 +44,8 @@ angular.module('rerere.cards.calendarview', [])
         )
         .values()                                             // Get the unique values from the set
         .map(function(d){return +d})                          // Ensure they are numbers
+        .filter(function(d){return !isNaN(d)})
+        console.log('Y', years)
 
       // Graphic variables for integration in the interface
       var width = ns.shadowContainer.host.offsetWidth         // Width of the graphical space cannot be set, we just get it
