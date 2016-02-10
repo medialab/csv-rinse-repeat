@@ -68,6 +68,12 @@ angular.module('rerere.view_board', ['ngRoute'])
     }
   }
 
+  $scope.downloadOutput = function () {
+    
+    var blob = new Blob([d3.csv.format(_output)], {type: "text/csv; charset=UTF-8"})
+    saveAs(blob, 'output.csv')
+  }
+
   $scope.inputCheckValidate_outputPreview = function(e){
     if(e.which == 13){
       $scope.previewRandomOutputRows()
