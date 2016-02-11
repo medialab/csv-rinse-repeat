@@ -164,9 +164,7 @@ th.data-cell{
   position: absolute;
   width: 0;
   height: 0;
-  margin-left: -0.5em;
   bottom: -5em;
-  right: 6em;
   box-sizing: border-box;
   border: 2.5em solid black;
   border-color: transparent transparent #fff #fff;
@@ -174,9 +172,22 @@ th.data-cell{
   transform: rotate(-45deg);
   box-shadow: -2px 2px 3px 0 rgba(0, 0, 0, 0.1);
 }
+.triangle-container.lefty .triangle {
+  margin-right: -0.5em;
+  left: 6em;
+}
+.triangle-container.righty .triangle {
+  margin-left: -0.5em;
+  right: 6em;
+}
 
 .triangle-container .triangle-content-container{
   position: absolute;
+}
+.triangle-container.lefty .triangle-content-container{
+  left: 7.20em;
+}
+.triangle-container.righty .triangle-content-container{
   right: 7.45em;
 }
 
