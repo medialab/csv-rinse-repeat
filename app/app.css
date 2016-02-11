@@ -55,34 +55,18 @@ html, body, .ng-scope:not(.viz-card), .pretty-split-pane-frame {
   width: 5px;
 }
 
-
-#left-top-component{
+#left-top-component, #right-top-component{
   height: 20%;
 }
 
-#left-middle-and-bottom-component{
+#horizontal-divider-1, #horizontal-divider-2{
+  top: 20%;
+  height: 5px;
+}
+
+#left-bottom-component, #right-bottom-component{
   top: 20%;
   margin-top: 5px;
-}
-
-#horizontal-divider-1{
-  top: 20%;
-  height: 5px;
-}
-
-
-#left-middle-component{
-  bottom: 25%;
-  margin-bottom: 5px;
-}
-
-#left-bottom-component{
-  height: 25%;
-}
-
-#horizontal-divider-2{
-  bottom: 25%;
-  height: 5px;
 }
 
 .theme-split-pane-frame {
@@ -100,10 +84,8 @@ html, body, .ng-scope:not(.viz-card), .pretty-split-pane-frame {
 .theme-split-pane-component-inner {
   box-sizing: border-box;
   border: 1px solid #EEE;
-  /*background: #EAEAEA;*/
   width: 100%;
   height: 100%;
-  /*padding: 0 1em;*/
 
           box-shadow: inset 0px 2px 5px 0px #eee;
        -o-box-shadow: inset 0px 2px 5px 0px #eee;

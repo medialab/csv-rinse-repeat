@@ -55,12 +55,9 @@
           </div>
         </div>
 
-        <div class="split-pane-component" id="left-middle-and-bottom-component">
-          
-          <div class="split-pane fixed-bottom">
-            <div class="split-pane-component" id="left-middle-component">
-              <div class="theme-split-pane-component-inner" id="js-editor-container" ng-keypress="codeKeyPress($event)">
-                <pre id="js-editor">
+        <div class="split-pane-component" id="left-bottom-component">
+          <div class="theme-split-pane-component-inner" id="js-editor-container" ng-keypress="codeKeyPress($event)">
+            <pre id="js-editor">
 // FILTER YOUR DATA HERE
 
 // Just fill the "output" variable using "input"
@@ -70,93 +67,7 @@ output = input.filter(function(item, i){
     return i &lt; 100;
 
 });</pre>
-              </div>
-            </div>
-            <div class="split-pane-divider" id="horizontal-divider-2">
-              <div class="triangle-container">
-                <div class="triangle"></div>
-                <div class="triangle-content-container">
-                  <div class="triangle-content text-info">
-                    CTRL<span class="plus-sign">+</span>ENTER
-                    <br>
-                    TO RUN
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="split-pane-component" id="left-bottom-component">
-              <div class="theme-split-pane-component-inner">
-                <div class="info-margin">
-                  OUTPUT
-                  <br>
-                  PREVIEW
-                  <div ng-show="outputLinePreviews">
-                    <button
-                      class="btn btn-xs btn-link"
-                      ng-click="previewRandomOutputRows()"
-                      title="Refresh"
-                      data-toggle="tooltip"
-                      data-placement="right"
-                      data-container="body"
-                    ><span class="glyphicon glyphicon-refresh"></span></button>
-                    <input
-                      class="form-control input-sm input-narrow"
-                      type="text"
-                      placeholder="#"
-                      ng-model='outputRowsCount'
-                      ng-keypress='inputCheckValidate_outputPreview($event)'
-                      title="How many rows?"
-                      data-toggle="tooltip"
-                      data-placement="right"
-                      data-container="body"
-                    >
-                    <br>
-                    <button
-                      class="btn btn-xs btn-link"
-                      ng-click="downloadOutput()"
-                      title="Download CSV"
-                      data-toggle="tooltip"
-                      data-placement="right"
-                      data-container="body"
-                    ><span class="glyphicon glyphicon-save"></span></button>
-                  </div>
-                </div>
-                <div class="preview-container" ng-if="!outputError && !outputLinePreviews">
-                  <div class="error-panel">
-                    <p>
-                      Edit your code and press <kbd>CTRL</kbd> + <kbd>ENTER</kbd> to run it
-                    </p>
-                    <p class="text-muted">
-                      <small>Note: it works only from the coding panel</small>
-                    </p>
-                  </div>
-                </div>
-                <div class="preview-container" ng-if="outputError">
-                  <div class="error-panel">
-                    <div class="alert alert-danger" role="alert">
-                      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                      <span class="sr-only">Error:</span>
-                      {{outputError}}
-                    </div>
-                  </div>
-                </div>
-                <div class="preview-container" ng-if="outputLinePreviews">
-                  <table class="table table-condensed">
-                    <tr>
-                      <th class="data-cell text-info">row #</th>
-                      <th ng-repeat="key in outputLinePreviews[0].keys" class="data-cell">{{key}}</th>
-                    </tr>
-                    <tr ng-repeat="outputLinePreview in outputLinePreviews track by $index">
-                      <td class="data-cell text-info">{{outputLinePreview.rowId}}</td>
-                      <td ng-repeat="cell in outputLinePreview.content track by $index" class="data-cell">{{cell}}</td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </div>
-
           </div>
-
         </div>
 
       </div>
@@ -164,65 +75,142 @@ output = input.filter(function(item, i){
 
     <div class="split-pane-divider" id="vertical-divider"></div>
     <div class="split-pane-component" id="right-component">
-      <div class="theme-split-pane-component-inner">
-        <div class="viz-cards-container" ng-show="!newCardProcess.active">
-
-          <div class="viz-card" ng-repeat="card in cards">
-            <div class="viz-card-title">
-              {{card.title}}
+      <div class="split-pane fixed-top">
+        <div class="split-pane-component" id="right-top-component">
+          <div class="theme-split-pane-component-inner">
+            <div class="info-margin">
+              OUTPUT
+              <br>
+              PREVIEW
+              <div ng-show="outputLinePreviews">
+                <button
+                  class="btn btn-xs btn-link"
+                  ng-click="previewRandomOutputRows()"
+                  title="Refresh"
+                  data-toggle="tooltip"
+                  data-placement="right"
+                  data-container="body"
+                ><span class="glyphicon glyphicon-refresh"></span></button>
+                <input
+                  class="form-control input-sm input-narrow"
+                  type="text"
+                  placeholder="#"
+                  ng-model='outputRowsCount'
+                  ng-keypress='inputCheckValidate_outputPreview($event)'
+                  title="How many rows?"
+                  data-toggle="tooltip"
+                  data-placement="right"
+                  data-container="body"
+                >
+                <br>
+                <button
+                  class="btn btn-xs btn-link"
+                  ng-click="downloadOutput()"
+                  title="Download CSV"
+                  data-toggle="tooltip"
+                  data-placement="right"
+                  data-container="body"
+                ><span class="glyphicon glyphicon-save"></span></button>
+              </div>
             </div>
-            <div class="float-buttons">
-              <button class="btn btn-xs btn-default" ng-click="downloadCard(card.id)" ng-if="card.card.download">
-                <span class="glyphicon glyphicon-download"></span> DOWNLOAD
-              </button>
+            <div class="preview-container" ng-if="!outputError && !outputLinePreviews">
+              <div class="error-panel">
+                <p>
+                  Edit your code and press <kbd>CTRL</kbd> + <kbd>ENTER</kbd> to run it
+                </p>
+                <p class="text-muted">
+                  <small>Note: it works only from the coding panel</small>
+                </p>
+              </div>
+            </div>
+            <div class="preview-container" ng-if="outputError">
+              <div class="error-panel">
+                <div class="alert alert-danger" role="alert">
+                  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                  <span class="sr-only">Error:</span>
+                  {{outputError}}
+                </div>
+              </div>
+            </div>
+            <div class="preview-container" ng-if="outputLinePreviews">
+              <table class="table table-condensed">
+                <tr>
+                  <th class="data-cell text-info">row #</th>
+                  <th ng-repeat="key in outputLinePreviews[0].keys" class="data-cell">{{key}}</th>
+                </tr>
+                <tr ng-repeat="outputLinePreview in outputLinePreviews track by $index">
+                  <td class="data-cell text-info">{{outputLinePreview.rowId}}</td>
+                  <td ng-repeat="cell in outputLinePreview.content track by $index" class="data-cell">{{cell}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="split-pane-divider" id="horizontal-divider-2">
+        </div>
+        <div class="split-pane-component" id="right-bottom-component">
 
-              <button class="btn btn-xs btn-default" ng-click="removeCard(card.id)">
-                <span class="glyphicon glyphicon-remove"></span> REMOVE
-              </button>
+          <div class="theme-split-pane-component-inner">
+            <div class="viz-cards-container" ng-show="!newCardProcess.active">
+
+              <div class="viz-card" ng-repeat="card in cards">
+                <div class="viz-card-title">
+                  {{card.title}}
+                </div>
+                <div class="float-buttons">
+                  <button class="btn btn-xs btn-default" ng-click="downloadCard(card.id)" ng-if="card.card.download">
+                    <span class="glyphicon glyphicon-download"></span> DOWNLOAD
+                  </button>
+
+                  <button class="btn btn-xs btn-default" ng-click="removeCard(card.id)">
+                    <span class="glyphicon glyphicon-remove"></span> REMOVE
+                  </button>
+
+                </div>
+                <div class="d3-panel" id="{{card.id}}">
+                  <p class="no-output-message">no output to visualize</p>
+                </div>
+              </div>
+
+              <div class="add-card-container">
+                <button type="button" class="btn btn-default" ng-click="newCard_addViz()"><span class="glyphicon glyphicon-plus"></span> ADD VIZ</button>
+              </div>
 
             </div>
-            <div class="d3-panel" id="{{card.id}}">
-              <p class="no-output-message">no output to visualize</p>
+
+            <div class="select-card-container" ng-show="newCardProcess.active && newCardProcess.step == 'select'">
+
+              <div class="select-card-header">
+                <h3>Which one?
+                  <button role="button" class="btn btn-link btn-lg pull-right btn-close" ng-click="newCard_cancel()">
+                    <span class="glyphicon glyphicon-remove"></span>
+                  </button>
+                </h3>
+              </div>
+
+              <div class="card-type" ng-repeat="card in cardTypes" ng-click="newCard_selectViz(card)">
+                <div class="card-image"><img ng-src="{{card.imageSource}}"/></div>
+                <div class="card-name">{{card.name}}</div>
+                <div class="card-description">{{card.description}}</div>
+                <div class="card-type-overlay">+</div>
+              </div>
+              
             </div>
-          </div>
 
-          <div class="add-card-container">
-            <button type="button" class="btn btn-default" ng-click="newCard_addViz()"><span class="glyphicon glyphicon-plus"></span> ADD VIZ</button>
-          </div>
+            <div class="card-options-container" ng-show="newCardProcess.active && newCardProcess.step == 'options'">
+              <div class="select-card-header">
+                <h3>{{newCardProcess.card.name}}: Which column?
+                  <button role="button" class="btn btn-link btn-lg pull-right btn-close" ng-click="newCard_backToSelect()">
+                    <span class="glyphicon glyphicon-remove"></span>
+                  </button>
+                </h3>
+              </div>
+              <button role="button" class="btn btn-default btn-col" ng-repeat="col in outputColumns" ng-click="newCard_selectColumn(col)">{{col}}</button>
+            </div>
 
+
+          </div>
         </div>
-
-        <div class="select-card-container" ng-show="newCardProcess.active && newCardProcess.step == 'select'">
-
-          <div class="select-card-header">
-            <h3>Which one?
-              <button role="button" class="btn btn-link btn-lg pull-right btn-close" ng-click="newCard_cancel()">
-                <span class="glyphicon glyphicon-remove"></span>
-              </button>
-            </h3>
-          </div>
-
-          <div class="card-type" ng-repeat="card in cardTypes" ng-click="newCard_selectViz(card)">
-            <div class="card-image"><img ng-src="{{card.imageSource}}"/></div>
-            <div class="card-name">{{card.name}}</div>
-            <div class="card-description">{{card.description}}</div>
-            <div class="card-type-overlay">+</div>
-          </div>
-          
-        </div>
-
-        <div class="card-options-container" ng-show="newCardProcess.active && newCardProcess.step == 'options'">
-          <div class="select-card-header">
-            <h3>{{newCardProcess.card.name}}: Which column?
-              <button role="button" class="btn btn-link btn-lg pull-right btn-close" ng-click="newCard_backToSelect()">
-                <span class="glyphicon glyphicon-remove"></span>
-              </button>
-            </h3>
-          </div>
-          <button role="button" class="btn btn-default btn-col" ng-repeat="col in outputColumns" ng-click="newCard_selectColumn(col)">{{col}}</button>
-        </div>
-
-
       </div>
     </div>
 

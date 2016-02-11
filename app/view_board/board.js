@@ -192,19 +192,6 @@ angular.module('rerere.view_board', ['ngRoute'])
     }, 150)
   }
 
-  // Load Test CSV
-  /*d3.csv("test.csv")
-    .get(function(error, rows) {
-      _input = rows
-      $scope.outputColumns = d3.keys(_input[0])
-      $scope.previewRandomInputRows()
-      $scope.$apply()
-    })*/
-
-
-
-
-
   // Internal functions
   function updateCards(){
     
