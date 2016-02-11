@@ -10,11 +10,25 @@
               <br>
               PREVIEW
               <br>
-              ROWS
-              <br>
-              <br>
-              <input class="form-control input-sm input-narrow" type="text" placeholder="#" ng-model='inputRowsCount' ng-keypress='inputCheckValidate_inputPreview($event)'>
-              <button class="btn btn-xs btn-link" ng-click="previewRandomInputRows()"><span class="glyphicon glyphicon-refresh"></span></button>
+              <button
+                class="btn btn-xs btn-link"
+                ng-click="previewRandomInputRows()"
+                title="Refresh"
+                data-toggle="tooltip"
+                data-placement="right"
+                data-container="body"
+              ><span class="glyphicon glyphicon-refresh"></span></button>
+              <input
+                class="form-control input-sm input-narrow"
+                type="text"
+                placeholder="#"
+                ng-model='inputRowsCount'
+                ng-keypress='inputCheckValidate_inputPreview($event)'
+                title="How many rows?"
+                data-toggle="tooltip"
+                data-placement="right"
+                data-container="body"
+              >
             </div>
             <div ng-if="inputLinePreviews" class="preview-container">
               <table class="table table-condensed">
@@ -76,14 +90,35 @@ output = input.filter(function(item, i){
                   OUTPUT
                   <br>
                   PREVIEW
-                  <div ng-if="outputLinePreviews">
-                    ROWS
+                  <div ng-show="outputLinePreviews">
+                    <button
+                      class="btn btn-xs btn-link"
+                      ng-click="previewRandomOutputRows()"
+                      title="Refresh"
+                      data-toggle="tooltip"
+                      data-placement="right"
+                      data-container="body"
+                    ><span class="glyphicon glyphicon-refresh"></span></button>
+                    <input
+                      class="form-control input-sm input-narrow"
+                      type="text"
+                      placeholder="#"
+                      ng-model='outputRowsCount'
+                      ng-keypress='inputCheckValidate_outputPreview($event)'
+                      title="How many rows?"
+                      data-toggle="tooltip"
+                      data-placement="right"
+                      data-container="body"
+                    >
                     <br>
-                    <br>
-                    <input class="form-control input-sm input-narrow" type="text" placeholder="#" ng-model='$parent.outputRowsCount' ng-keypress='inputCheckValidate_outputPreview($event)'>
-                    <button class="btn btn-xs btn-link" ng-click="previewRandomOutputRows()"><span class="glyphicon glyphicon-refresh"></span></button>
-                    <br>
-                    <button class="btn btn-xs btn-link" ng-click="downloadOutput()"><span class="glyphicon glyphicon-download"></span></button>
+                    <button
+                      class="btn btn-xs btn-link"
+                      ng-click="downloadOutput()"
+                      title="Download CSV"
+                      data-toggle="tooltip"
+                      data-placement="right"
+                      data-container="body"
+                    ><span class="glyphicon glyphicon-save"></span></button>
                   </div>
                 </div>
                 <div class="preview-container" ng-if="!outputError && !outputLinePreviews">

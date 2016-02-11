@@ -14,6 +14,10 @@
     "split-pane": "~0.4.0",
     "d3": "~3.5.5",
     "bootstrap": "~3.3.2",
-    "FileSaver.js": "git://github.com/eligrey/FileSaver.js.git"
+    "FileSaver.js": "git://github.com/eligrey/FileSaver.js.git",
+    "angular-bootstrap": "^1.1.2"
+  },
+  "resolutions": {
+    "angular": "1.2.28"
   }
 }

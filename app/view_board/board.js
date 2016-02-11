@@ -21,8 +21,8 @@ angular.module('rerere.view_board', ['ngRoute'])
   $scope.outputLinePreviews = false
   $scope.outputError = false
 
-  $scope.inputRowsCount = 1
-  $scope.outputRowsCount = 1
+  $scope.inputRowsCount = 3
+  $scope.outputRowsCount = 3
 
   $scope.newCardProcess = {active:false}
 
@@ -33,6 +33,9 @@ angular.module('rerere.view_board', ['ngRoute'])
   $scope.startingCode = '// Edit your data here\ndata = data\n.map(function(d, i){\nreturn i\n})'
   
   $('div.split-pane').splitPane()
+  // $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  // })
 
   // Scope functions
   $scope.previewRandomInputRows = function(){
