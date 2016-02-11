@@ -123,6 +123,20 @@ html, body, .ng-scope:not(.viz-card), .pretty-split-pane-frame {
   overflow: auto;
 }
 
+.right-default-container {
+  height: 100%;
+}
+
+.right-default-message {
+  position: absolute;
+  width: 300px;
+  margin-left: -150px;
+  margin-top: -150px;
+  left: 50%;
+  top: 50%;
+  font-size: 18px;
+  text-align: center;
+}
 /* JS editor */
 #js-editor-container {
   overflow: hidden;

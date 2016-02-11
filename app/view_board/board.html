@@ -66,16 +66,33 @@ output = input.filter(function(item, i){
     // EXAMPLE: return the first 100 items
     return i &lt; 100;
 
-});</pre>
+});
+
+// Hit CTRL + ENTER to run the code</pre>
           </div>
         </div>
 
       </div>
     </div>
 
-    <div class="split-pane-divider" id="vertical-divider"></div>
+    <div class="split-pane-divider" id="vertical-divider">
+    </div>
     <div class="split-pane-component" id="right-component">
-      <div class="split-pane fixed-top">
+      <div class="right-default-container" ng-show="!outputError && !outputLinePreviews">
+        <div class="right-default-message">
+          <p>
+            Edit your code
+            <br>then press 
+            <br><kbd>CTRL</kbd> + <kbd>ENTER</kbd>
+          </p>
+          <p class="text-muted">
+            <small><em>
+              (works only from coding panel)
+            </em></small>
+          </p>
+        </div>
+      </div>
+      <div class="split-pane fixed-top" ng-show="outputError || outputLinePreviews">
         <div class="split-pane-component" id="right-top-component">
           <div class="theme-split-pane-component-inner">
             <div class="info-margin">
@@ -113,6 +130,7 @@ output = input.filter(function(item, i){
                 ><span class="glyphicon glyphicon-save"></span></button>
               </div>
             </div>
+            <!-- Note: this panel should never appear -->
             <div class="preview-container" ng-if="!outputError && !outputLinePreviews">
               <div class="error-panel">
                 <p>
@@ -157,10 +175,8 @@ output = input.filter(function(item, i){
           </div>
         </div>
         <div class="split-pane-component" id="right-bottom-component">
-
           <div class="theme-split-pane-component-inner">
             <div class="viz-cards-container" ng-show="!newCardProcess.active">
-
               <div class="viz-card" ng-repeat="card in cards">
                 <div class="viz-card-title">
                   {{card.title}}
