@@ -468,4 +468,8 @@ th.data-cell{
   color: #FFF;
 }
 
-
+.upload-info {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}

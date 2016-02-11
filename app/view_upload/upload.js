@@ -55,6 +55,19 @@ angular.module('rerere.view_upload', ['ngRoute'])
     })
   }
 
+  $scope.loadExample = function (url) {
+    $scope.loadingMessage = 'LOADING...'
+    $.get(url, function (data) {
+      store.set('csv', data)
+      $scope.loadingMessage = 'PARSING...'
+      $scope.dropClass = 'success'
+      $scope.$apply()
+      $timeout(function(){
+        $location.url('/board')
+      }, 150)
+    })
+  }
+
   // Make the text area droppable
   droppable(document.getElementById("uploader"), $scope, $scope.readFile)
 }])
