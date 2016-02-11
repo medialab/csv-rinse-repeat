@@ -1,4 +1,10 @@
-# CSV Rinse Repeat - An online tool for iterative CSV grooming
+# CSV Rinse Repeat - CSV grooming, the JS way
+
+### The idea
+You have a CSV and you need to transform it into a better CSV, which includes filtering, clustering, parsing, merging, (...) and matching regular expressions. Why not doing it in JS? You're welcome.
+
+### Just use it
+TODO: online version
 
 ### Installing
 
@@ -8,4 +14,5 @@ $ bower install
 ```
 
 ### Using
-Browse to the ```app/``` directory, upload a CSV, code.
+Browse to the ```app/``` directory, upload a CSV, add visualizations, code javascript.
+
