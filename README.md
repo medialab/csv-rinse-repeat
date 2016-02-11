@@ -1,7 +1,11 @@
-# A tool to iterate filtering with js
+# CSV Rinse Repeat - An online tool for iterative CSV grooming
 
-I know you want to use it. A better description soon.
+### Installing
 
-## It does not even have a definitive name
+```sh
+# install dependencies listed in bower.json
+$ bower install
+```
 
-Feel free to sumbit your ideas
+### Using
+Browse to the ```app/``` directory, upload a CSV, code.
