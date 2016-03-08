@@ -4,7 +4,7 @@
 You have a CSV and you need to transform it into a better CSV, which includes filtering, clustering, parsing, merging, (...) and matching regular expressions. Why not doing it in JS? You're welcome.
 
 ### Just use it
-TODO: online version
+http://tools.medialab.sciences-po.fr/csv-rinse-repeat/
 
 ### Installing
 
