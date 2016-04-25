@@ -48,7 +48,7 @@ angular.module('rerere.cards.calendarview', [])
       
       // Graphic variables for integration in the interface
       var width = ns.shadowContainer.host.offsetWidth         // Width of the graphical space cannot be set, we just get it
-        , cellSize = 10                                       // Size of the date cells, impacts height
+        , cellSize = Math.floor(width / 60)                   // Size of the date cells, impacts height
         , height = (17 + 7 * cellSize)                        // Height can be set (for yearly block)
         , padding_top = 20                                    // Padding added because the title uses space in the UI
       // Setting size of graphical container
