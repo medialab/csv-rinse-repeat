@@ -1,14 +1,14 @@
 'use strict';
 
-angular.module('rerere.cards.volumeovertime_day', [])
+angular.module('rerere.cards.volumeovertime_month', [])
 
-.factory('volumeovertime_day', [
+.factory('volumeovertime_month', [
   function() {
     var ns = {}
 
-    ns.name = "DAILY VOLUME"
+    ns.name = "MONTHLY VOLUME"
 
-    ns.description = "Daily count of items as a curve"
+    ns.description = "Monthly count of items as a curve"
 
     ns.shadowContainer = undefined  // Referenced in ns.draw
 
@@ -28,11 +28,11 @@ angular.module('rerere.cards.volumeovertime_day', [])
         , week    = d3.time.format("%U")
         , month   = d3.time.format("%m")
         , year    = d3.time.format("%Y")
-        , format  = d3.time.format("%Y-%m-%d")
+        , format  = d3.time.format("%Y-%m")
 
       var partialData = d3.nest()
         .key(function(d) {
-            return format(new Date(d[column_id]))             // The key is the formatted date ('format' = day precision)
+            return format(new Date(d[column_id]))             // The key is the formatted date ('format' = month precision)
           })
         .rollup(function(leaves) { return leaves.length  })   // The rollup allows to count items (per date)
         .entries(table)                                       // Target of the nesting process
@@ -54,7 +54,7 @@ angular.module('rerere.cards.volumeovertime_day', [])
 
       // Transform partial data, where not all dates are present,
       // into data where every date is present
-      var data = d3.time.day.range(d3.time.day.offset(dates[0], -1), dates[dates.length - 1])
+      var data = d3.time.month.range(d3.time.month.offset(dates[0], -1), dates[dates.length - 1])
         .map(function(date){
           var fdate = format(date)
           return {

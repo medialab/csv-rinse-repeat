@@ -8,8 +8,10 @@ var cardlist =
 [ 'topitems'
 , 'wordcloud'
 , 'topwords'
-, 'volumeovertime_day'
 , 'calendarview'
+, 'volumeovertime_day'
+, 'volumeovertime_month'
+, 'volumeovertime_year'
 , 'mapcoordinates'
 ]
 
