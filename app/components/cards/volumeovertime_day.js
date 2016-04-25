@@ -40,6 +40,13 @@ angular.module('rerere.cards.volumeovertime_day', [])
             return new Date(a.key) - new Date(b.key)
           })
 
+      var datesIndex = {}                                     // Dates index is required for curve definition
+      var dates = data.map(function(d) {
+        var date = new Date(d.key)
+        datesIndex[date] = true
+        return date
+      })
+      
       var margin = {top: 20, right: 20, bottom: 30, left: 40}
         , width = shadowContainer.host.offsetWidth - margin.left - margin.right
         , containerHeight = 300
@@ -48,8 +55,8 @@ angular.module('rerere.cards.volumeovertime_day', [])
       // Setting size of graphical container
       shadowContainer.host.style.height = containerHeight + 'px'
 
-      var x = d3.scale.ordinal()
-          .rangeRoundBands([0, width], .1)
+      var x = d3.time.scale()
+          .range([0, width])
 
       var y = d3.scale.linear()
           .range([height, 0])
@@ -57,10 +64,6 @@ angular.module('rerere.cards.volumeovertime_day', [])
       var xAxis = d3.svg.axis()
           .scale(x)
           .orient("bottom")
-          .ticks(d3.time.days, 1)
-          .tickFormat(d3.time.format('%d'))
-          .tickSize(0)
-          .tickPadding(8);
 
       var yAxis = d3.svg.axis()
           .scale(y)
@@ -73,7 +76,7 @@ angular.module('rerere.cards.volumeovertime_day', [])
         .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
-      x.domain(data.map(function(d) { return new Date(d.key); }));
+      x.domain(d3.extent(dates));
       y.domain([0, d3.max(data, function(d) { return d.values; })]);
 
       svg.append("g")
@@ -91,16 +94,42 @@ angular.module('rerere.cards.volumeovertime_day', [])
           .style("text-anchor", "end")
           .text("# items");
 
-      svg.selectAll(".bar")
-          .data(data)
-        .enter().append("rect")
-          .attr("class", "bar")
-          .attr("x", function(d) { return x(new Date(d.key)); })
-          .attr("width", x.rangeBand())
-          .attr("y", function(d) { return y(d.values); })
-          .attr("height", function(d) { return height - y(d.values); })
+
+      function isDefined(d) {
+        return datesIndex[new Date(d.key)]
+      }
+
+      var line = d3.svg.line()
+          .defined(isDefined)
+          .x(function(d) { return x(new Date(d.key)) })
+          .y(function(d) { return y(d.values) });
+
+      var area = d3.svg.area()
+          .defined(isDefined)
+          .x(line.x())
+          .y0(height)
+          .y1(line.y())
+          .interpolate('monotone')
+
+      svg.append('path')
+          .datum(data)
+          .attr('class', 'area')
+          .attr('d', area)
+
+      svg.append('path')
+        .datum(data)
+        .attr('class', 'line')
+        .attr('d', line)
+
+      svg.selectAll('.dot')
+          .data(data.filter(isDefined))
+        .enter().append('circle')
+          .attr('class', 'dot')
+          .attr('cx', line.x())
+          .attr('cy', line.y())
+          .attr('r', 3.5)
         .append("title")
-          .text(function(d) { return d.key + ': ' + d.values + ' items' });
+          .text(function(d) { return d.key + ': ' + d.values + ' items' })
 
       // Inject CSS
       var s = document.createElement('style')
@@ -109,31 +138,33 @@ angular.module('rerere.cards.volumeovertime_day', [])
     }
 
     ns.css = '\
-*{  \
-  font-family: Roboto Condensed, sans-serif;  \
+*{ \
+  font-family: Roboto Condensed, sans-serif; \
 } \
-  \
-.bar {  \
-  fill: steelblue;  \
+.area { \
+  fill: lightsteelblue; \
 } \
-  \
-.bar:hover {  \
-  fill: brown;  \
+.line { \
+  fill: none; \
+  stroke: steelblue; \
+  stroke-width: 1.5px; \
 } \
-  \
+.dot { \
+  fill: white; \
+  stroke: steelblue; \
+  stroke-width: 1.5px; \
+} \
 .axis { \
-  font-size: 9px;  \
+  font-size: 9px; \
 } \
-  \
 .axis path, \
-.axis line {  \
+.axis line { \
   fill: none; \
   stroke: #000; \
-  shape-rendering: crispEdges;  \
+  shape-rendering: crispEdges; \
 } \
-  \
-.x.axis path {  \
-  display: none;  \
+.x.axis path { \
+  display: none; \
 }'
 
     return ns
