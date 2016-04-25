@@ -45,14 +45,12 @@ angular.module('rerere.cards.calendarview', [])
         .values()                                             // Get the unique values from the set
         .map(function(d){return +d})                          // Ensure they are numbers
         .filter(function(d){return !isNaN(d)})
-      console.log('Y', years)
-
+      
       // Graphic variables for integration in the interface
       var width = ns.shadowContainer.host.offsetWidth         // Width of the graphical space cannot be set, we just get it
         , cellSize = 10                                       // Size of the date cells, impacts height
         , height = (17 + 7 * cellSize)                        // Height can be set (for yearly block)
         , padding_top = 20                                    // Padding added because the title uses space in the UI
-      console.log(width, height)
       // Setting size of graphical container
       ns.shadowContainer.host.style.height = (height * (years.length + 1) + 12) + 'px'
 
@@ -110,7 +108,6 @@ angular.module('rerere.cards.calendarview', [])
           .attr("d", monthPath)                               // Complex code to write the path in a function below
 
       // Finally fill rectangles with color depending on data
-      console.log('data', data, rect.filter(function(d) { return d in data }))
       rect.filter(function(d) { return d in data })           // Filter the rectangles when they match a date we have in data
           .attr("class", function(d) {                        // Modify the CSS class:
               return "day " + color(data[d])                  //  keep 'day' class and add the right color class
