@@ -45,16 +45,16 @@ angular.module('rerere.cards.calendarview', [])
         .values()                                             // Get the unique values from the set
         .map(function(d){return +d})                          // Ensure they are numbers
         .filter(function(d){return !isNaN(d)})
-        console.log('Y', years)
+      console.log('Y', years)
 
       // Graphic variables for integration in the interface
       var width = ns.shadowContainer.host.offsetWidth         // Width of the graphical space cannot be set, we just get it
-        , cellSize = 14                                       // Size of the date cells, impacts height
-        , height = (17 + 7 * cellSize) * years.length         // Height can be set (for yearly block)
+        , cellSize = 10                                       // Size of the date cells, impacts height
+        , height = (17 + 7 * cellSize)                        // Height can be set (for yearly block)
         , padding_top = 20                                    // Padding added because the title uses space in the UI
-
+      console.log(width, height)
       // Setting size of graphical container
-      ns.shadowContainer.host.style.height = (height + 12) + 'px'
+      ns.shadowContainer.host.style.height = (height * (years.length + 1) + 12) + 'px'
 
       // 'color' maps values to CSS classes 'q0-11' to 'q10-11' containing a color scale
       var color = d3.scale.quantize()                         // Specifies a discrete scale as a mapping function
@@ -66,7 +66,7 @@ angular.module('rerere.cards.calendarview', [])
 
       // Draw each year as a different calendar block
       var svg = d3.select(ns.shadowContainer).selectAll("svg")
-          .data(d3.range(d3.min(years), d3.max(years)+1))     // Bind years to svg elements in container
+          .data(years)     // Bind years to svg elements in container
         .enter().append("svg")                                // Create a SVG for each year
           .attr("width", width)                               // Width of yearly block
           .attr("height", height)                             // Height of yearly block
@@ -110,6 +110,7 @@ angular.module('rerere.cards.calendarview', [])
           .attr("d", monthPath)                               // Complex code to write the path in a function below
 
       // Finally fill rectangles with color depending on data
+      console.log('data', data, rect.filter(function(d) { return d in data }))
       rect.filter(function(d) { return d in data })           // Filter the rectangles when they match a date we have in data
           .attr("class", function(d) {                        // Modify the CSS class:
               return "day " + color(data[d])                  //  keep 'day' class and add the right color class
@@ -139,8 +140,9 @@ angular.module('rerere.cards.calendarview', [])
 
     ns.download = function(){
       var svgContainer = ns.shadowContainer.querySelector('svg')
-        , w = svgContainer.offsetWidth
-        , h = svgContainer.offsetHeight
+        , r = svgContainer.getBoundingClientRect()
+        , w = r.right - r.left
+        , h = r.top - r.bottom
         , content = []
 
       content.push('<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'">')
@@ -153,7 +155,7 @@ angular.module('rerere.cards.calendarview', [])
     }
 
     // The CSS to be injected
-    // Note: backslashes allow multiline text -  oes not work in every browser
+    // Note: backslashes allow multiline text -  does not work in every browser
     ns.css = "\
 *{\
 font: 11px Roboto, sans-serif;\
