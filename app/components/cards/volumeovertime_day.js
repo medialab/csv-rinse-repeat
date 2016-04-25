@@ -30,7 +30,7 @@ angular.module('rerere.cards.volumeovertime_day', [])
         , year    = d3.time.format("%Y")
         , format  = d3.time.format("%Y-%m-%d")
 
-      var data = d3.nest()
+      var partialData = d3.nest()
         .key(function(d) {
             return format(new Date(d[column_id]))             // The key is the formatted date ('format' = day precision)
           })
@@ -41,11 +41,28 @@ angular.module('rerere.cards.volumeovertime_day', [])
           })
 
       var datesIndex = {}                                     // Dates index is required for curve definition
-      var dates = data.map(function(d) {
-        var date = new Date(d.key)
-        datesIndex[date] = true
-        return date
-      })
+      var dates = partialData
+        .filter(function(d) {
+          var date = new Date(d.key)
+          return !isNaN(date.getTime())
+        })
+        .map(function(d) {
+          datesIndex[d.key] = d.values
+          var date = new Date(d.key)
+          return date
+        })
+
+      // Transform partial data, where not all dates are present,
+      // into data where every date is present
+      var data = d3.time.day.range(d3.time.day.offset(dates[0], -1), dates[dates.length - 1])
+        .map(function(date){
+          var fdate = format(date)
+          return {
+            key: fdate,
+            values: datesIndex[fdate] || null
+          }
+        })
+
       
       var margin = {top: 20, right: 20, bottom: 30, left: 40}
         , width = shadowContainer.host.offsetWidth - margin.left - margin.right
@@ -96,13 +113,15 @@ angular.module('rerere.cards.volumeovertime_day', [])
 
 
       function isDefined(d) {
-        return datesIndex[new Date(d.key)]
+        var date = new Date(d.key)
+        return d.key && d.values && !isNaN(date.getTime()) && datesIndex[d.key]
       }
 
       var line = d3.svg.line()
           .defined(isDefined)
           .x(function(d) { return x(new Date(d.key)) })
-          .y(function(d) { return y(d.values) });
+          .y(function(d) { return y(d.values) })
+          .interpolate('monotone')
 
       var area = d3.svg.area()
           .defined(isDefined)
