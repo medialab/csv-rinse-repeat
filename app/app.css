@@ -154,7 +154,11 @@ html, body, .ng-scope:not(.viz-card), .pretty-split-pane-frame {
 /* Table preview */
 .data-cell{
   word-wrap: break-word;
+  width: 120px;
+  min-width: 120px;
   max-width: 120px;
+  max-height: 120px;
+  overflow: hidden;
 }
 td.data-cell{
   font-family: 'Roboto Condensed', sans-serif;
