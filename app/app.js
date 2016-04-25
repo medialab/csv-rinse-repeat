@@ -10,5 +10,16 @@ angular.module('rerere', [
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/upload'});
-}]);
+}])
 
+// Filters
+.filter('number', function() {
+  return function(d) {
+    return +d
+  }
+})
+.filter('percent', function() {
+  return function(d) {
+    return Math.round(+d*100)+'%'
+  }
+})

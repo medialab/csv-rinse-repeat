@@ -19,6 +19,8 @@ angular.module('rerere.view_board', ['ngRoute'])
   $scope.outputColumns = []
   $scope.inputLinePreviews = false
   $scope.outputLinePreviews = false
+  $scope.inputCount
+  $scope.outputCount
   $scope.outputError = false
 
   $scope.inputRowsCount = 3
@@ -117,6 +119,7 @@ angular.module('rerere.view_board', ['ngRoute'])
     if(success){
       _output = output
       $scope.outputColumns = d3.keys(_output[0])
+      $scope.outputCount = _output.length
       $scope.previewRandomOutputRows()
       $scope.outputError = false
 
@@ -183,6 +186,7 @@ angular.module('rerere.view_board', ['ngRoute'])
   var csv_string = store.get('csv')
   if(csv_string){
     _input = d3.csv.parse(csv_string)
+    $scope.inputCount = _input.length
     $scope.outputColumns = d3.keys(_input[0])
     $scope.previewRandomInputRows()
     // $scope.$apply()

@@ -114,8 +114,9 @@ html, body, .ng-scope:not(.viz-card), .pretty-split-pane-frame {
 
 .info-margin .input-narrow{
   text-align: center;
-  width: 36px;
-  margin-left: 12px;
+  width: 46px;
+  margin-left: 6px;
+  height: 20px;
 }
 
 .preview-container{
