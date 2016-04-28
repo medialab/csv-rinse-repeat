@@ -485,4 +485,16 @@ th.data-cell{
   position: absolute;
   top: 12px;
   left: 12px;
+  color: #A28D8D;
+}
+
+.upload-info img {
+  opacity: 0.5;
+}
+
+.upload-info h1 {
+  font-size: 3.2em;
+  font-weight: 200;
+  margin-top: 0px;
+  margin-bottom: 3px;
 }

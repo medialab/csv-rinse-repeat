@@ -1,0 +1,40 @@
+// Get the complicated column name
+var affColumn = d3.keys(input[0])[5];
+
+output = input.map(function(item, i){
+    
+    var affiliationID = +item[affColumn];
+    var affiliation;
+    
+    switch (affiliationID) {
+        case(1):
+            affiliation = 'Civil society/NGO';
+            break;
+        case(2):
+            affiliation = 'Business organisation';
+            break;
+        case(3):
+            affiliation = 'Consulting';
+            break;
+        case(4):
+            affiliation = 'Government';
+            break;
+        case(5):
+            affiliation = 'Academia';
+            break;
+        case(6):
+            affiliation = 'Personal';
+            break;
+        default:
+            affiliation = 'UNKNOWN';
+            break;
+    }
+    
+    delete item[affColumn];
+    item['Affiliation'] = affiliation;
+    
+    return item
+
+});
+
+// Hit CTRL + ENTER to run the code

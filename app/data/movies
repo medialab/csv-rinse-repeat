@@ -1,0 +1,18 @@
+output = input.map(function(item, i){
+
+    // Extract year data
+    item.Year = item.Movie.match(/.*\(([0-9][0-9][0-9][0-9])\)/)[1];
+    
+    // Clean title data (remove the year)
+    item.Movie = item.Movie.replace(' ('+item.Year+')', '');
+    
+    return item;
+
+}).filter(function(item, i){
+
+    // Only the movies with a number in their title
+    return item.Movie.search(/[0-9]/gi) >= 0;
+
+});
+
+// Hit CTRL + ENTER to run the code

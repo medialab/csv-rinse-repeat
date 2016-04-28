@@ -176,6 +176,11 @@ angular.module('rerere.view_board', ['ngRoute'])
 
 
   // INITIALIZATION
+  var js_string = store.get('js')
+  if(js_string){
+    $('#js-editor').text(js_string)
+  }
+  
   // Init Ace JS editor panel
   // Note: we keep editor in global scope to be able to edit settings from the console
   window.editor = ace.edit("js-editor");

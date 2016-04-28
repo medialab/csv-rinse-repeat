@@ -1,0 +1,20 @@
+// Date formats
+var inputFormat  = d3.time.format("%m/%d/%Y");
+var outputFormat = d3.time.format("%Y-%m-%d");
+
+output = input.map(function(item, i){
+
+    // Clean the date format
+    var date = inputFormat.parse(item['Record Date']);
+    item['Record Date'] = outputFormat(date);
+    
+    return item;
+
+}).filter(function(item, i){
+
+    // We just keep labs in Alabama
+    return item.State == 'AL';
+
+});
+
+// Hit CTRL + ENTER to run the code

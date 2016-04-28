@@ -22,7 +22,25 @@
   </div>
 </div>
 <div class="upload-info">
-  <button class="btn btn-link" ng-click="loadExample('data/movies.csv')">Load example CSV</button>
+  <h1>CSV, Rinse, Repeat</h1>
+  <br>
+  <p>
+    Sample datasets:
+  </p>
+  <button class="btn btn-link" ng-click="loadExample('data/movies.csv', 'data/movies')">Movies</button>
+  <br>
+  <button class="btn btn-link" ng-click="loadExample('data/nasa-lab-facilities.csv', 'data/nasa-lab-facilities')">NASA lab facilities</button>
+  <br>
+  <button class="btn btn-link" ng-click="loadExample('data/OECD-BEPS-consultation-actors.csv', 'data/OECD-BEPS-consultation-actors')">OECD BEPS consultation actors</button>
+  <br>
+  <br>
+  <br>
+  <p>
+    ...more <a href="http://tools.medialab.sciences-po.fr/">médialab tools</a>
+  </p>
+  <br>
+  <a href="http://www.medialab.sciences-po.fr/"><img src="medialab.png"></a>
+
 </div>
 
 <!-- This hidden input is used for loading the files via the dropdown of the nav tabs -->

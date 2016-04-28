@@ -55,16 +55,27 @@ angular.module('rerere.view_upload', ['ngRoute'])
     })
   }
 
-  $scope.loadExample = function (url) {
+  $scope.loadExample = function (dataUrl, jsUrl) {
     $scope.loadingMessage = 'LOADING...'
-    $.get(url, function (data) {
+    $.get(dataUrl, function (data) {
       store.set('csv', data)
       $scope.loadingMessage = 'PARSING...'
       $scope.dropClass = 'success'
       $scope.$apply()
-      $timeout(function(){
-        $location.url('/board')
-      }, 150)
+      if (jsUrl) {
+        $.get(jsUrl, function (jsData) {
+          console.log('Gaga', jsUrl)
+          store.set('js', jsData)
+          $scope.$apply()
+          $timeout(function(){
+            $location.url('/board')
+          }, 150)
+        })
+      } else {
+        $timeout(function(){
+          $location.url('/board')
+        }, 150)
+      }
     })
   }
 
