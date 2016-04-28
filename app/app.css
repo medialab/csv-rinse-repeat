@@ -485,7 +485,13 @@ th.data-cell{
   position: absolute;
   top: 12px;
   left: 12px;
+  bottom: 12px;
+  right: 12px;
   color: #A28D8D;
+}
+
+.upload-info.bottom {
+  text-align: right;
 }
 
 .upload-info img {
