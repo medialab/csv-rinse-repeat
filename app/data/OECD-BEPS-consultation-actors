@@ -3,6 +3,7 @@ var affColumn = d3.keys(input[0])[5];
 
 output = input.map(function(item, i){
     
+    // Clean affiliations
     var affiliationID = +item[affColumn];
     var affiliation;
     
@@ -39,6 +40,13 @@ output = input.map(function(item, i){
     
     delete item[affColumn];
     item['Affiliation'] = affiliation;
+    
+    // Clean actions
+    item.Action = item.Action
+        .replace('Action ', '')
+        .replace('Actions ', '')
+        .replace(', ', ',')
+        .replace(' & ', ',')
     
     return item
 

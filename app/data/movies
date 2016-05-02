@@ -6,6 +6,9 @@ output = input.map(function(item, i){
     // Clean title data (remove the year)
     item.Movie = item.Movie.replace(' ('+item.Year+')', '');
     
+    // Clean rating
+    item.Rating = item.Rating.replace('/10', '')
+    
     return item;
 
 }).filter(function(item, i){
