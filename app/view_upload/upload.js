@@ -11,7 +11,7 @@ angular.module('rerere.view_upload', ['ngRoute'])
 
 .controller('UploadCtrl', ['droppable', '$scope', 'FileLoader', 'store', '$location', '$timeout'
 , function(                 droppable ,  $scope ,  FileLoader ,  store ,  $location ,  $timeout) {
-  
+
   $scope.dropClass
   $scope.loadingMessage = ''
 
@@ -64,7 +64,6 @@ angular.module('rerere.view_upload', ['ngRoute'])
       $scope.$apply()
       if (jsUrl) {
         $.get(jsUrl, function (jsData) {
-          console.log('Gaga', jsUrl)
           store.set('js', jsData)
           $scope.$apply()
           $timeout(function(){
