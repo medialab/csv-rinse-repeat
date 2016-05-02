@@ -11,7 +11,7 @@ angular.module('rerere.view_board', ['ngRoute'])
 
 .controller('BoardCtrl', ['$scope', '$timeout',  'cards', 'store', '$location'
   ,function(               $scope ,  $timeout ,  _cards ,  store ,  $location) {
-
+  
   var currentCardId = 0
     , _output
     , _input

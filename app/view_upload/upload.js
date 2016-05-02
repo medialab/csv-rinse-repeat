@@ -11,7 +11,7 @@ angular.module('rerere.view_upload', ['ngRoute'])
 
 .controller('UploadCtrl', ['droppable', '$scope', 'FileLoader', 'store', '$location', '$timeout'
 , function(                 droppable ,  $scope ,  FileLoader ,  store ,  $location ,  $timeout) {
-
+  
   $scope.dropClass
   $scope.loadingMessage = ''
 
