@@ -4,6 +4,6 @@
   "url": "http://tools.medialab.sciences-po.fr/csv-rinse-repeat/",
   "source": "https://github.com/medialab/csv-rinse-repeat",
   "licence": "MIT",
-  "visual": "",
+  "visual": "csvrinserepeat.png",
   "description": "You have a CSV and you need to transform it into a better CSV, which includes filtering, clustering, parsing, merging, (...) and matching regular expressions. Why not do it in JS? You're welcome."
 }
