@@ -6,14 +6,16 @@
   "repository": "https://github.com/angular/angular-seed",
   "license": "MIT",
   "devDependencies": {
-    "karma": "~0.10",
-    "protractor": "^1.1.1",
-    "http-server": "^0.6.1",
     "bower": "^1.3.1",
-    "shelljs": "^0.2.6",
-    "karma-junit-reporter": "^0.2.2"
+    "gh-pages": "^2.0.1",
+    "http-server": "^0.6.1",
+    "karma": "~0.10",
+    "karma-junit-reporter": "^0.2.2",
+    "protractor": "^1.1.1",
+    "shelljs": "^0.2.6"
   },
   "scripts": {
+    "deploy": "gh-pages -d app",
     "postinstall": "bower install",
     "prestart": "npm install",
     "start": "http-server -a localhost -p 8000 -c-1",
