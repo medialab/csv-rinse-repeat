@@ -15,7 +15,7 @@
     "shelljs": "^0.2.6"
   },
   "scripts": {
-    "deploy": "gh-pages -d app",
+    "deploy": "gh-pages -d app --dotfiles",
     "postinstall": "bower install",
     "prestart": "npm install",
     "start": "http-server -a localhost -p 8000 -c-1",
