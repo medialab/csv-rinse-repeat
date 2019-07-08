@@ -1,0 +1,20 @@
+{
+  "name": "angular-loader",
+  "version": "1.2.32",
+  "license": "MIT",
+  "main": "./angular-loader.js",
+  "ignore": [],
+  "dependencies": {
+    "angular": "1.2.32"
+  },
+  "homepage": "https://github.com/angular/bower-angular-loader",
+  "_release": "1.2.32",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.2.32",
+    "commit": "d33cd2e5b6b1eef2817eb5f825c8346c517c0184"
+  },
+  "_source": "https://github.com/angular/bower-angular-loader.git",
+  "_target": "1.2.x",
+  "_originalSource": "angular-loader"
+}
